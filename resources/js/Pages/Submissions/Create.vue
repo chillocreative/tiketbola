@@ -67,12 +67,22 @@ import { Head, Link } from '@inertiajs/vue3';
                 </div>
 
                 <!-- Syarat Kelayakan -->
-                <div class="mt-5 text-center">
-                    <p class="text-sm font-bold text-white">Syarat Kelayakan:</p>
-                    <ul class="mt-1.5 space-y-0.5 text-xs text-gray-400">
-                        <li>- 18 Tahun ke atas</li>
-                        <li>- Mestilah pengundi di Parlimen Kepala Batas</li>
-                    </ul>
+                <div class="mx-auto mt-6 max-w-sm rounded-2xl border border-white/10 bg-white/5 px-5 py-4 backdrop-blur-sm">
+                    <p class="mb-3 text-center text-xs font-bold uppercase tracking-widest text-yellow-400">Syarat Kelayakan</p>
+                    <div class="space-y-2">
+                        <div class="flex items-start gap-2.5">
+                            <svg class="mt-0.5 h-4 w-4 shrink-0 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                            <span class="text-sm text-gray-300">18 Tahun ke atas</span>
+                        </div>
+                        <div class="flex items-start gap-2.5">
+                            <svg class="mt-0.5 h-4 w-4 shrink-0 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                            <span class="text-sm text-gray-300">Mestilah pengundi di Parlimen Kepala Batas</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

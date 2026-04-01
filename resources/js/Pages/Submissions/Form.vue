@@ -15,6 +15,8 @@ const form = useForm({
     category: props.category,
 });
 
+const agreed = ref(false);
+
 const submitted = ref(false);
 const showForm = computed(() => !submitted.value && !props.flash?.success);
 
@@ -131,7 +133,16 @@ const submit = () => {
                                 <p v-if="form.errors.address" class="mt-1.5 text-xs text-red-400">{{ form.errors.address }}</p>
                             </div>
 
-                            <button type="submit" :disabled="form.processing"
+                            <!-- Disclaimer -->
+                            <div class="flex items-start gap-3">
+                                <input type="checkbox" id="agree" v-model="agreed"
+                                    class="mt-0.5 h-4 w-4 shrink-0 rounded border-white/20 bg-white/10 text-yellow-400 focus:ring-yellow-400 focus:ring-offset-0" />
+                                <label for="agree" class="cursor-pointer text-xs leading-relaxed text-gray-400">
+                                    Saya dengan ini bersetuju dengan syarat-syarat yang telah ditetapkan seperti di atas. Saya juga faham bahawa pihak urusetia mempunyai hak penuh untuk memberi atau menolak permohonan tiket bola percuma ini tanpa sebarang alasan.
+                                </label>
+                            </div>
+
+                            <button type="submit" :disabled="form.processing || !agreed"
                                 :class="category === 'amk'
                                     ? 'bg-gradient-to-r from-yellow-400 to-yellow-500 text-gray-900 shadow-yellow-500/25 hover:from-yellow-300 hover:to-yellow-400 hover:shadow-yellow-500/40 focus:ring-yellow-400'
                                     : 'bg-gradient-to-r from-[#00B4D8] to-[#0096c7] text-white shadow-[#00B4D8]/25 hover:from-[#48cae4] hover:to-[#00B4D8] hover:shadow-[#00B4D8]/40 focus:ring-[#00B4D8]'"

@@ -14,11 +14,8 @@ import { Link } from '@inertiajs/vue3';
 
         <!-- Logo -->
         <div class="relative z-10 mb-6">
-            <Link href="/" class="flex flex-col items-center gap-3">
+            <Link href="/">
                 <SoccerBall :size="64" />
-                <span class="text-xl font-extrabold tracking-tight text-white">
-                    Tiket<span class="text-yellow-400">Bola</span>
-                </span>
             </Link>
         </div>
 

@@ -45,16 +45,16 @@ class WhatsappService
 
         try {
             $payload = [
+                'to' => $phone,
                 'message' => $message,
-                'phone' => $phone,
             ];
 
             if ($this->settings->device_id) {
-                $payload['device_id'] = $this->settings->device_id;
+                $payload['device_id'] = (int) $this->settings->device_id;
             }
 
             $response = $this->apiClient()
-                ->post(rtrim($this->settings->api_url, '/') . '/api/send', $payload);
+                ->post(rtrim($this->settings->api_url, '/') . '/api/v1/send-message', $payload);
 
             if ($response->successful()) {
                 $log->update([
@@ -119,13 +119,14 @@ class WhatsappService
 
         try {
             $response = $this->apiClient()
-                ->get(rtrim($this->settings->api_url, '/') . '/api/devices');
+                ->get(rtrim($this->settings->api_url, '/') . '/api/v1/devices');
 
             if ($response->successful()) {
                 $data = $response->json();
+                $deviceCount = is_array($data['data'] ?? null) ? count($data['data']) : 0;
                 return [
                     'success' => true,
-                    'message' => 'Sambungan berjaya! Peranti ditemui.',
+                    'message' => "Sambungan berjaya! {$deviceCount} peranti ditemui.",
                     'data' => $data,
                 ];
             }

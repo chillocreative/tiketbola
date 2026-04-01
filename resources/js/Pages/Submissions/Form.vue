@@ -143,10 +143,12 @@ const submit = () => {
                             </div>
 
                             <button type="submit" :disabled="form.processing || !agreed"
-                                :class="category === 'amk'
-                                    ? 'bg-gradient-to-r from-yellow-400 to-yellow-500 text-gray-900 shadow-yellow-500/25 hover:from-yellow-300 hover:to-yellow-400 hover:shadow-yellow-500/40 focus:ring-yellow-400'
-                                    : 'bg-gradient-to-r from-[#00B4D8] to-[#0096c7] text-white shadow-[#00B4D8]/25 hover:from-[#48cae4] hover:to-[#00B4D8] hover:shadow-[#00B4D8]/40 focus:ring-[#00B4D8]'"
-                                class="w-full rounded-xl px-6 py-3.5 text-sm font-extrabold shadow-lg transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#0B1A2E] disabled:opacity-50">
+                                :class="!agreed && !form.processing
+                                    ? 'bg-white/10 text-gray-500 cursor-not-allowed'
+                                    : category === 'amk'
+                                        ? 'bg-gradient-to-r from-yellow-400 to-yellow-500 text-gray-900 shadow-yellow-500/25 hover:from-yellow-300 hover:to-yellow-400 hover:shadow-yellow-500/40 focus:ring-yellow-400'
+                                        : 'bg-gradient-to-r from-[#00B4D8] to-[#0096c7] text-white shadow-[#00B4D8]/25 hover:from-[#48cae4] hover:to-[#00B4D8] hover:shadow-[#00B4D8]/40 focus:ring-[#00B4D8]'"
+                                class="w-full rounded-xl px-6 py-3.5 text-sm font-extrabold shadow-lg transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#0B1A2E] disabled:opacity-100">
                                 <span v-if="form.processing" class="flex items-center justify-center gap-2">
                                     <svg class="h-4 w-4 animate-spin" viewBox="0 0 24 24">
                                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none" />

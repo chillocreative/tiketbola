@@ -1,9 +1,12 @@
 <script setup>
 import { Head, Link } from '@inertiajs/vue3';
+import { ref } from 'vue';
 
 defineProps({
     quotas: Object,
 });
+
+const showFullModal = ref(false);
 </script>
 
 <template>
@@ -112,9 +115,13 @@ defineProps({
                             >
                                 Daftar Sekarang
                             </Link>
-                            <div v-else class="rounded-xl bg-white/10 px-4 py-3 text-center text-xs font-bold text-gray-500 sm:px-6 sm:py-3.5 sm:text-sm">
+                            <button
+                                v-else
+                                @click="showFullModal = true"
+                                class="w-full rounded-xl bg-white/10 px-4 py-3 text-center text-xs font-bold text-gray-500 transition hover:bg-white/15 sm:px-6 sm:py-3.5 sm:text-sm"
+                            >
                                 Kuota Penuh
-                            </div>
+                            </button>
                             <p class="mt-3 text-center text-[10px] leading-relaxed text-gray-400 sm:text-xs">
                                 Tajaan Angkatan Muda Keadilan Cabang Kepala Batas & JBPP Pinang Tunggal
                             </p>
@@ -136,9 +143,13 @@ defineProps({
                             >
                                 Daftar Sekarang
                             </Link>
-                            <div v-else class="rounded-xl bg-white/10 px-4 py-3 text-center text-xs font-bold text-gray-500 sm:px-6 sm:py-3.5 sm:text-sm">
+                            <button
+                                v-else
+                                @click="showFullModal = true"
+                                class="w-full rounded-xl bg-white/10 px-4 py-3 text-center text-xs font-bold text-gray-500 transition hover:bg-white/15 sm:px-6 sm:py-3.5 sm:text-sm"
+                            >
                                 Kuota Penuh
-                            </div>
+                            </button>
                             <p class="mt-3 text-center text-[10px] leading-relaxed text-gray-400 sm:text-xs">
                                 Tajaan Ahli Majlis MBSP, Pegawai Penyelaras KADUN Pinang Tunggal, Parti KEADILAN Cabang Kepala Batas
                             </p>
@@ -159,5 +170,38 @@ defineProps({
                 </div>
             </div>
         </div>
+        <!-- Quota Full Modal -->
+        <Teleport to="body">
+            <Transition
+                enter-active-class="transition duration-200 ease-out"
+                enter-from-class="opacity-0"
+                enter-to-class="opacity-100"
+                leave-active-class="transition duration-150 ease-in"
+                leave-from-class="opacity-100"
+                leave-to-class="opacity-0"
+            >
+                <div v-if="showFullModal" class="fixed inset-0 z-50 flex items-center justify-center px-4" @click.self="showFullModal = false">
+                    <div class="fixed inset-0 bg-black/60 backdrop-blur-sm"></div>
+                    <div class="relative w-full max-w-sm overflow-hidden rounded-2xl border border-white/10 bg-[#0f2340] p-6 shadow-2xl">
+                        <!-- Icon -->
+                        <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-red-500/10">
+                            <svg class="h-7 w-7 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                            </svg>
+                        </div>
+                        <h3 class="mb-2 text-center text-lg font-bold text-white">Kuota Telah Penuh</h3>
+                        <p class="mb-6 text-center text-sm leading-relaxed text-gray-400">
+                            Maaf, kuota pendaftaran untuk kategori ini telah penuh. Terima kasih atas minat anda.
+                        </p>
+                        <button
+                            @click="showFullModal = false"
+                            class="w-full rounded-xl bg-gradient-to-r from-yellow-400 to-yellow-500 px-6 py-3 text-sm font-extrabold text-gray-900 transition hover:from-yellow-300 hover:to-yellow-400"
+                        >
+                            Tutup
+                        </button>
+                    </div>
+                </div>
+            </Transition>
+        </Teleport>
     </div>
 </template>

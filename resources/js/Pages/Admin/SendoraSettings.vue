@@ -9,9 +9,10 @@ const props = defineProps({
 });
 
 const form = useForm({
-    api_url: props.settings?.api_url || 'https://sendora.id/api/v1',
+    api_url: props.settings?.api_url || 'https://sendora.cc',
     api_token: '',
     sender_number: props.settings?.sender_number || '',
+    device_id: props.settings?.device_id || '',
     is_active: props.settings?.is_active || false,
     timeout: props.settings?.timeout || 30,
 });
@@ -100,6 +101,19 @@ const testConnection = async () => {
                                     placeholder="cth: 60123456789"
                                 />
                                 <p v-if="form.errors.sender_number" class="mt-1.5 text-xs text-red-400">{{ form.errors.sender_number }}</p>
+                            </div>
+
+                            <!-- Device ID -->
+                            <div>
+                                <label for="device_id" class="mb-1.5 block text-sm font-semibold text-gray-200">Device ID</label>
+                                <input
+                                    id="device_id"
+                                    v-model="form.device_id"
+                                    type="text"
+                                    class="block w-full rounded-xl border-0 bg-white/10 px-4 py-3 text-sm text-white placeholder-gray-500 ring-1 ring-white/10 transition focus:bg-white/15 focus:ring-2 focus:ring-yellow-400"
+                                    placeholder="Masukkan Device ID dari Sendora"
+                                />
+                                <p v-if="form.errors.device_id" class="mt-1.5 text-xs text-red-400">{{ form.errors.device_id }}</p>
                             </div>
 
                             <!-- Timeout -->

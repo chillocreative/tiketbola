@@ -11,6 +11,7 @@ class SendoraSetting extends Model
         'api_url',
         'api_token',
         'sender_number',
+        'device_id',
         'is_active',
         'timeout',
     ];

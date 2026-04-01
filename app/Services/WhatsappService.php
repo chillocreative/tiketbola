@@ -38,11 +38,12 @@ class WhatsappService
         try {
             $response = Http::withToken($this->settings->api_token)
                 ->timeout($this->settings->timeout)
-                ->post(rtrim($this->settings->api_url, '/') . '/messages', [
+                ->post(rtrim($this->settings->api_url, '/') . '/messages', array_filter([
                     'phone' => $phone,
                     'message' => $message,
                     'sender' => $this->settings->sender_number,
-                ]);
+                    'device_id' => $this->settings->device_id,
+                ]));
 
             if ($response->successful()) {
                 $log->update([

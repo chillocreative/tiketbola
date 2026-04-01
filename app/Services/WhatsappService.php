@@ -16,6 +16,14 @@ class WhatsappService
         $this->settings = SendoraSetting::current();
     }
 
+    protected function apiClient()
+    {
+        return Http::withHeaders([
+            'Authorization' => 'Bearer ' . $this->settings->api_token,
+            'Accept' => 'application/json',
+        ])->timeout($this->settings->timeout);
+    }
+
     public function send(string $phone, string $message, ?int $submissionId = null): array
     {
         if (!$this->settings || !$this->settings->is_active) {
@@ -36,14 +44,17 @@ class WhatsappService
         ]);
 
         try {
-            $response = Http::withToken($this->settings->api_token)
-                ->timeout($this->settings->timeout)
-                ->post(rtrim($this->settings->api_url, '/') . '/messages', array_filter([
-                    'phone' => $phone,
-                    'message' => $message,
-                    'sender' => $this->settings->sender_number,
-                    'device_id' => $this->settings->device_id,
-                ]));
+            $payload = [
+                'message' => $message,
+                'phone' => $phone,
+            ];
+
+            if ($this->settings->device_id) {
+                $payload['device_id'] = $this->settings->device_id;
+            }
+
+            $response = $this->apiClient()
+                ->post(rtrim($this->settings->api_url, '/') . '/api/send', $payload);
 
             if ($response->successful()) {
                 $log->update([
@@ -58,7 +69,7 @@ class WhatsappService
 
                 return [
                     'success' => true,
-                    'message' => 'Message sent successfully.',
+                    'message' => 'Mesej berjaya dihantar.',
                     'data' => $response->json(),
                 ];
             }
@@ -77,7 +88,7 @@ class WhatsappService
 
             return [
                 'success' => false,
-                'message' => 'API error: ' . $response->status(),
+                'message' => 'Ralat API: ' . $response->status(),
             ];
         } catch (\Exception $e) {
             $log->update([
@@ -92,7 +103,7 @@ class WhatsappService
 
             return [
                 'success' => false,
-                'message' => 'Failed to send: ' . $e->getMessage(),
+                'message' => 'Gagal menghantar: ' . $e->getMessage(),
             ];
         }
     }
@@ -102,31 +113,38 @@ class WhatsappService
         if (!$this->settings || !$this->settings->api_token) {
             return [
                 'success' => false,
-                'message' => 'Sendora is not configured. Please set API token first.',
+                'message' => 'Sendora belum dikonfigurasi. Sila tetapkan API token terlebih dahulu.',
             ];
         }
 
         try {
-            $response = Http::withToken($this->settings->api_token)
-                ->timeout($this->settings->timeout)
-                ->get(rtrim($this->settings->api_url, '/') . '/status');
+            $response = $this->apiClient()
+                ->get(rtrim($this->settings->api_url, '/') . '/api/devices');
 
             if ($response->successful()) {
+                $data = $response->json();
                 return [
                     'success' => true,
-                    'message' => 'Connection successful!',
-                    'data' => $response->json(),
+                    'message' => 'Sambungan berjaya! Peranti ditemui.',
+                    'data' => $data,
+                ];
+            }
+
+            if ($response->status() === 401) {
+                return [
+                    'success' => false,
+                    'message' => 'Token API tidak sah. Sila semak semula token anda.',
                 ];
             }
 
             return [
                 'success' => false,
-                'message' => 'API returned status: ' . $response->status(),
+                'message' => 'API mengembalikan status: ' . $response->status(),
             ];
         } catch (\Exception $e) {
             return [
                 'success' => false,
-                'message' => 'Connection failed: ' . $e->getMessage(),
+                'message' => 'Sambungan gagal: ' . $e->getMessage(),
             ];
         }
     }

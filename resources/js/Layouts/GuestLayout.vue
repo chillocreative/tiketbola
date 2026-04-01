@@ -1,22 +1,37 @@
 <script setup>
-import ApplicationLogo from '@/Components/ApplicationLogo.vue';
+import SoccerBall from '@/Components/SoccerBall.vue';
 import { Link } from '@inertiajs/vue3';
 </script>
 
 <template>
-    <div
-        class="flex min-h-screen flex-col items-center bg-gray-100 pt-6 sm:justify-center sm:pt-0"
-    >
-        <div>
-            <Link href="/">
-                <ApplicationLogo class="h-20 w-20 fill-current text-gray-500" />
+    <div class="flex min-h-screen flex-col items-center bg-[#0B1A2E] px-4 pt-8 sm:justify-center sm:pt-0">
+        <!-- Background glow effects -->
+        <div class="pointer-events-none fixed inset-0 overflow-hidden">
+            <div class="absolute -top-40 -left-40 h-80 w-80 rounded-full bg-yellow-400/5 blur-3xl"></div>
+            <div class="absolute -bottom-40 -right-40 h-80 w-80 rounded-full bg-green-500/5 blur-3xl"></div>
+            <div class="absolute top-1/2 left-1/2 h-60 w-60 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#00B4D8]/5 blur-3xl"></div>
+        </div>
+
+        <!-- Logo -->
+        <div class="relative z-10 mb-6">
+            <Link href="/" class="flex flex-col items-center gap-3">
+                <SoccerBall :size="64" />
+                <span class="text-xl font-extrabold tracking-tight text-white">
+                    Tiket<span class="text-yellow-400">Bola</span>
+                </span>
             </Link>
         </div>
 
-        <div
-            class="mt-6 w-full overflow-hidden bg-white px-6 py-4 shadow-md sm:max-w-md sm:rounded-lg"
-        >
+        <!-- Card -->
+        <div class="relative z-10 w-full max-w-md overflow-hidden rounded-2xl border border-white/10 bg-white/5 px-6 py-8 shadow-2xl backdrop-blur-sm sm:px-8">
             <slot />
+        </div>
+
+        <!-- Footer -->
+        <div class="relative z-10 mt-6 pb-8 text-center">
+            <Link href="/" class="text-xs text-gray-500 transition hover:text-yellow-400">
+                &larr; Kembali ke halaman utama
+            </Link>
         </div>
     </div>
 </template>

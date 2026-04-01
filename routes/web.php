@@ -40,6 +40,11 @@ Route::middleware('auth')->group(function () {
 
     // Submissions management
     Route::get('/admin/submissions', [SubmissionController::class, 'index'])->name('admin.submissions');
+    Route::get('/admin/submissions/create', [SubmissionController::class, 'adminCreate'])->name('admin.submissions.create');
+    Route::post('/admin/submissions', [SubmissionController::class, 'adminStore'])->name('admin.submissions.store');
+    Route::get('/admin/submissions/{submission}/edit', [SubmissionController::class, 'edit'])->name('admin.submissions.edit');
+    Route::put('/admin/submissions/{submission}', [SubmissionController::class, 'update'])->name('admin.submissions.update');
+    Route::delete('/admin/submissions/{submission}', [SubmissionController::class, 'destroy'])->name('admin.submissions.destroy');
     Route::post('/admin/submissions/{submission}/verify', [SubmissionController::class, 'verify'])->name('admin.submissions.verify');
     Route::post('/admin/submissions/{submission}/reject', [SubmissionController::class, 'reject'])->name('admin.submissions.reject');
 

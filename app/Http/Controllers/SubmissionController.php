@@ -153,4 +153,67 @@ class SubmissionController extends Controller
 
         return back()->with('warning', 'Permohonan ditolak tetapi notifikasi WhatsApp gagal: ' . $result['message']);
     }
+
+    // Admin CRUD
+
+    public function adminCreate()
+    {
+        return Inertia::render('Admin/Submissions/Create');
+    }
+
+    public function adminStore(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'ic_number' => 'required|string|digits_between:1,12|unique:submissions,ic_number',
+            'phone' => 'required|string|digits_between:1,11',
+            'address' => 'required|string|max:1000',
+            'category' => 'required|in:amk,mbsp',
+            'status' => 'required|in:pending,verified,rejected',
+        ], [
+            'ic_number.unique' => 'No Kad Pengenalan ini telah didaftarkan.',
+        ]);
+
+        $validated['name'] = strtoupper($validated['name']);
+        $validated['address'] = strtoupper($validated['address']);
+
+        Submission::create($validated);
+
+        return redirect()->route('admin.submissions')->with('success', 'Pendaftaran berjaya ditambah.');
+    }
+
+    public function edit(Submission $submission)
+    {
+        return Inertia::render('Admin/Submissions/Edit', [
+            'submission' => $submission,
+        ]);
+    }
+
+    public function update(Request $request, Submission $submission)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'ic_number' => 'required|string|digits_between:1,12|unique:submissions,ic_number,' . $submission->id,
+            'phone' => 'required|string|digits_between:1,11',
+            'address' => 'required|string|max:1000',
+            'category' => 'required|in:amk,mbsp',
+            'status' => 'required|in:pending,verified,rejected',
+        ], [
+            'ic_number.unique' => 'No Kad Pengenalan ini telah didaftarkan.',
+        ]);
+
+        $validated['name'] = strtoupper($validated['name']);
+        $validated['address'] = strtoupper($validated['address']);
+
+        $submission->update($validated);
+
+        return redirect()->route('admin.submissions')->with('success', 'Pendaftaran berjaya dikemaskini.');
+    }
+
+    public function destroy(Submission $submission)
+    {
+        $submission->delete();
+
+        return back()->with('success', 'Pendaftaran berjaya dipadam.');
+    }
 }

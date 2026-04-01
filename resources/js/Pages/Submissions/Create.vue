@@ -34,17 +34,6 @@ const submit = () => {
             <div class="absolute -top-20 -right-20 h-60 w-60 rounded-full bg-green-500/10 blur-3xl"></div>
 
             <div class="mx-auto max-w-lg px-4 pt-6 sm:px-6 lg:max-w-2xl">
-                <!-- Top Badge -->
-                <div class="mb-4 flex justify-center">
-                    <div class="inline-flex items-center gap-2 rounded-full bg-yellow-400/10 px-4 py-1.5 backdrop-blur-sm">
-                        <span class="relative flex h-2 w-2">
-                            <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
-                            <span class="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
-                        </span>
-                        <span class="text-xs font-semibold tracking-wide text-yellow-300 uppercase">Pendaftaran Dibuka</span>
-                    </div>
-                </div>
-
                 <!-- Title -->
                 <h1 class="mb-2 text-center text-2xl font-extrabold leading-tight text-white sm:text-3xl lg:text-4xl">
                     Tiket Bola Percuma

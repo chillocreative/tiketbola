@@ -35,11 +35,14 @@ class SubmissionController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'ic_number' => 'required|string|max:20',
-            'phone' => 'required|string|max:20',
+            'ic_number' => 'required|string|digits_between:1,12',
+            'phone' => 'required|string|digits_between:1,11',
             'address' => 'required|string|max:1000',
             'category' => 'required|in:amk,mbsp',
         ]);
+
+        $validated['name'] = strtoupper($validated['name']);
+        $validated['address'] = strtoupper($validated['address']);
 
         Submission::create($validated);
 

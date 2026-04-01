@@ -17,8 +17,16 @@ const form = useForm({
 
 const submitted = ref(false);
 
+const onlyDigits = (field, max) => {
+    form[field] = form[field].replace(/\D/g, '').slice(0, max);
+};
+
 const submit = () => {
-    form.post(route('submissions.store'), {
+    form.transform((data) => ({
+        ...data,
+        name: data.name.toUpperCase(),
+        address: data.address.toUpperCase(),
+    })).post(route('submissions.store'), {
         preserveScroll: true,
         onSuccess: () => {
             form.reset('name', 'ic_number', 'phone', 'address');
@@ -87,7 +95,7 @@ const submit = () => {
                                     v-model="form.name"
                                     type="text"
                                     required
-                                    class="block w-full rounded-xl border-0 bg-white/10 px-4 py-3 text-sm text-white placeholder-gray-500 ring-1 ring-white/10 transition focus:bg-white/15 focus:ring-2 focus:ring-yellow-400"
+                                    class="block w-full rounded-xl border-0 bg-white/10 px-4 py-3 text-sm uppercase text-white placeholder-gray-500 ring-1 ring-white/10 transition focus:bg-white/15 focus:ring-2 focus:ring-yellow-400"
                                     placeholder="Masukkan nama penuh"
                                 />
                                 <p v-if="form.errors.name" class="mt-1.5 text-xs text-red-400">{{ form.errors.name }}</p>
@@ -102,9 +110,12 @@ const submit = () => {
                                     id="ic_number"
                                     v-model="form.ic_number"
                                     type="text"
+                                    inputmode="numeric"
                                     required
+                                    maxlength="12"
+                                    @input="onlyDigits('ic_number', 12)"
                                     class="block w-full rounded-xl border-0 bg-white/10 px-4 py-3 text-sm text-white placeholder-gray-500 ring-1 ring-white/10 transition focus:bg-white/15 focus:ring-2 focus:ring-yellow-400"
-                                    placeholder="cth: 901234-10-5678"
+                                    placeholder="cth: 901234105678"
                                 />
                                 <p v-if="form.errors.ic_number" class="mt-1.5 text-xs text-red-400">{{ form.errors.ic_number }}</p>
                             </div>
@@ -118,9 +129,12 @@ const submit = () => {
                                     id="phone"
                                     v-model="form.phone"
                                     type="tel"
+                                    inputmode="numeric"
                                     required
+                                    maxlength="11"
+                                    @input="onlyDigits('phone', 11)"
                                     class="block w-full rounded-xl border-0 bg-white/10 px-4 py-3 text-sm text-white placeholder-gray-500 ring-1 ring-white/10 transition focus:bg-white/15 focus:ring-2 focus:ring-yellow-400"
-                                    placeholder="cth: 0123456789"
+                                    placeholder="cth: 01234567890"
                                 />
                                 <p v-if="form.errors.phone" class="mt-1.5 text-xs text-red-400">{{ form.errors.phone }}</p>
                             </div>
@@ -135,7 +149,7 @@ const submit = () => {
                                     v-model="form.address"
                                     rows="3"
                                     required
-                                    class="block w-full rounded-xl border-0 bg-white/10 px-4 py-3 text-sm text-white placeholder-gray-500 ring-1 ring-white/10 transition focus:bg-white/15 focus:ring-2 focus:ring-yellow-400"
+                                    class="block w-full rounded-xl border-0 bg-white/10 px-4 py-3 text-sm uppercase text-white placeholder-gray-500 ring-1 ring-white/10 transition focus:bg-white/15 focus:ring-2 focus:ring-yellow-400"
                                     placeholder="Masukkan alamat rumah penuh"
                                 ></textarea>
                                 <p v-if="form.errors.address" class="mt-1.5 text-xs text-red-400">{{ form.errors.address }}</p>

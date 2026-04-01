@@ -49,12 +49,12 @@ const submit = () => {
 
             <div class="mx-auto max-w-lg px-4 pt-8 pb-12 sm:px-6">
                 <!-- Back link -->
-                <Link href="/" class="mb-6 inline-flex items-center gap-1.5 text-sm text-gray-400 transition hover:text-yellow-400">
+                <a :href="route('submissions.create')" class="mb-6 inline-flex items-center gap-1.5 text-sm text-gray-400 transition hover:text-yellow-400">
                     <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                     </svg>
                     Kembali
-                </Link>
+                </a>
 
                 <!-- Header -->
                 <div class="mb-6 text-center">
@@ -76,15 +76,15 @@ const submit = () => {
                         <p class="mb-1 text-sm text-gray-300">Terima kasih kerana mendaftar.</p>
                         <p class="text-sm text-gray-400">Anda akan menerima notifikasi WhatsApp mengenai status permohonan anda.</p>
                     </div>
-                    <Link
-                        href="/"
+                    <a
+                        :href="route('submissions.create')"
                         class="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-yellow-400 to-yellow-500 px-6 py-3 text-sm font-extrabold text-gray-900 shadow-lg shadow-yellow-500/25 transition hover:from-yellow-300 hover:to-yellow-400"
                     >
                         <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0h4" />
                         </svg>
                         Kembali ke Halaman Utama
-                    </Link>
+                    </a>
                 </div>
 
                 <!-- Form Card -->

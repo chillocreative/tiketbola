@@ -23,26 +23,29 @@ defineProps({
                     <div class="h-3 w-3 rounded-full bg-yellow-400"></div>
                     <h3 class="text-sm font-bold text-yellow-400 uppercase tracking-wider">AMK & JBPP Pinang Tunggal</h3>
                 </div>
-                <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+                <div class="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
                     <div class="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/5 p-5 backdrop-blur-sm transition hover:border-yellow-400/20">
-                        <div class="absolute -right-4 -top-4 h-20 w-20 rounded-full bg-yellow-400/10 blur-2xl transition group-hover:bg-yellow-400/20"></div>
                         <div class="relative">
                             <span class="text-xs font-medium text-gray-500">Jumlah</span>
                             <div class="mt-1 text-3xl font-extrabold text-white">{{ stats?.amk?.total || 0 }}</div>
                         </div>
                     </div>
                     <div class="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/5 p-5 backdrop-blur-sm transition hover:border-yellow-400/20">
-                        <div class="absolute -right-4 -top-4 h-20 w-20 rounded-full bg-yellow-400/10 blur-2xl transition group-hover:bg-yellow-400/20"></div>
                         <div class="relative">
                             <span class="text-xs font-medium text-gray-500">Menunggu</span>
                             <div class="mt-1 text-3xl font-extrabold text-yellow-400">{{ stats?.amk?.pending || 0 }}</div>
                         </div>
                     </div>
                     <div class="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/5 p-5 backdrop-blur-sm transition hover:border-green-500/20">
-                        <div class="absolute -right-4 -top-4 h-20 w-20 rounded-full bg-green-500/10 blur-2xl transition group-hover:bg-green-500/20"></div>
                         <div class="relative">
-                            <span class="text-xs font-medium text-gray-500">Disahkan</span>
+                            <span class="text-xs font-medium text-gray-500">Diluluskan</span>
                             <div class="mt-1 text-3xl font-extrabold text-green-400">{{ stats?.amk?.verified || 0 }}</div>
+                        </div>
+                    </div>
+                    <div class="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/5 p-5 backdrop-blur-sm transition hover:border-red-500/20">
+                        <div class="relative">
+                            <span class="text-xs font-medium text-gray-500">Ditolak</span>
+                            <div class="mt-1 text-3xl font-extrabold text-red-400">{{ stats?.amk?.rejected || 0 }}</div>
                         </div>
                     </div>
                 </div>
@@ -54,26 +57,29 @@ defineProps({
                     <div class="h-3 w-3 rounded-full bg-[#00B4D8]"></div>
                     <h3 class="text-sm font-bold text-[#00B4D8] uppercase tracking-wider">MBSP & KADUN Pinang Tunggal</h3>
                 </div>
-                <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+                <div class="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
                     <div class="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/5 p-5 backdrop-blur-sm transition hover:border-[#00B4D8]/20">
-                        <div class="absolute -right-4 -top-4 h-20 w-20 rounded-full bg-[#00B4D8]/10 blur-2xl transition group-hover:bg-[#00B4D8]/20"></div>
                         <div class="relative">
                             <span class="text-xs font-medium text-gray-500">Jumlah</span>
                             <div class="mt-1 text-3xl font-extrabold text-white">{{ stats?.mbsp?.total || 0 }}</div>
                         </div>
                     </div>
                     <div class="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/5 p-5 backdrop-blur-sm transition hover:border-yellow-400/20">
-                        <div class="absolute -right-4 -top-4 h-20 w-20 rounded-full bg-yellow-400/10 blur-2xl transition group-hover:bg-yellow-400/20"></div>
                         <div class="relative">
                             <span class="text-xs font-medium text-gray-500">Menunggu</span>
                             <div class="mt-1 text-3xl font-extrabold text-yellow-400">{{ stats?.mbsp?.pending || 0 }}</div>
                         </div>
                     </div>
                     <div class="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/5 p-5 backdrop-blur-sm transition hover:border-green-500/20">
-                        <div class="absolute -right-4 -top-4 h-20 w-20 rounded-full bg-green-500/10 blur-2xl transition group-hover:bg-green-500/20"></div>
                         <div class="relative">
-                            <span class="text-xs font-medium text-gray-500">Disahkan</span>
+                            <span class="text-xs font-medium text-gray-500">Diluluskan</span>
                             <div class="mt-1 text-3xl font-extrabold text-green-400">{{ stats?.mbsp?.verified || 0 }}</div>
+                        </div>
+                    </div>
+                    <div class="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/5 p-5 backdrop-blur-sm transition hover:border-red-500/20">
+                        <div class="relative">
+                            <span class="text-xs font-medium text-gray-500">Ditolak</span>
+                            <div class="mt-1 text-3xl font-extrabold text-red-400">{{ stats?.mbsp?.rejected || 0 }}</div>
                         </div>
                     </div>
                 </div>

@@ -20,11 +20,13 @@ Route::get('/dashboard', function () {
                 'total' => Submission::where('category', 'amk')->count(),
                 'pending' => Submission::where('category', 'amk')->where('status', 'pending')->count(),
                 'verified' => Submission::where('category', 'amk')->where('status', 'verified')->count(),
+                'rejected' => Submission::where('category', 'amk')->where('status', 'rejected')->count(),
             ],
             'mbsp' => [
                 'total' => Submission::where('category', 'mbsp')->count(),
                 'pending' => Submission::where('category', 'mbsp')->where('status', 'pending')->count(),
                 'verified' => Submission::where('category', 'mbsp')->where('status', 'verified')->count(),
+                'rejected' => Submission::where('category', 'mbsp')->where('status', 'rejected')->count(),
             ],
         ],
     ]);
@@ -39,6 +41,7 @@ Route::middleware('auth')->group(function () {
     // Submissions management
     Route::get('/admin/submissions', [SubmissionController::class, 'index'])->name('admin.submissions');
     Route::post('/admin/submissions/{submission}/verify', [SubmissionController::class, 'verify'])->name('admin.submissions.verify');
+    Route::post('/admin/submissions/{submission}/reject', [SubmissionController::class, 'reject'])->name('admin.submissions.reject');
 
     // Sendora settings
     Route::get('/admin/sendora', [SendoraSettingController::class, 'edit'])->name('admin.sendora.edit');

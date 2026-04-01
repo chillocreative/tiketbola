@@ -7,25 +7,38 @@ const props = defineProps({
     submissions: Object,
 });
 
-const verifying = ref(null);
+const processing = ref(null);
 
-const verify = (id) => {
-    if (!confirm('Sahkan pendaftaran ini dan hantar notifikasi WhatsApp?')) return;
-    verifying.value = id;
+const approve = (id) => {
+    if (!confirm('Luluskan permohonan ini? Notifikasi WhatsApp akan dihantar kepada pemohon.')) return;
+    processing.value = id;
     router.post(route('admin.submissions.verify', id), {}, {
         preserveScroll: true,
-        onFinish: () => verifying.value = null,
+        onFinish: () => processing.value = null,
+    });
+};
+
+const reject = (id) => {
+    if (!confirm('Tolak permohonan ini? Notifikasi WhatsApp akan dihantar kepada pemohon.')) return;
+    processing.value = id;
+    router.post(route('admin.submissions.reject', id), {}, {
+        preserveScroll: true,
+        onFinish: () => processing.value = null,
     });
 };
 
 const statusLabel = (status) => {
-    return status === 'verified' ? 'Disahkan' : 'Menunggu';
+    const labels = { verified: 'Diluluskan', rejected: 'Ditolak', pending: 'Menunggu' };
+    return labels[status] || status;
 };
 
 const statusClass = (status) => {
-    return status === 'verified'
-        ? 'bg-green-500/10 text-green-400 ring-1 ring-green-500/20'
-        : 'bg-yellow-400/10 text-yellow-400 ring-1 ring-yellow-400/20';
+    const classes = {
+        verified: 'bg-green-500/10 text-green-400 ring-1 ring-green-500/20',
+        rejected: 'bg-red-500/10 text-red-400 ring-1 ring-red-500/20',
+        pending: 'bg-yellow-400/10 text-yellow-400 ring-1 ring-yellow-400/20',
+    };
+    return classes[status] || '';
 };
 
 const categoryLabel = (cat) => {
@@ -120,20 +133,33 @@ const categoryClass = (cat) => {
                                     {{ new Date(submission.created_at).toLocaleDateString('ms-MY') }}
                                 </td>
                                 <td class="whitespace-nowrap px-4 py-4 text-sm">
-                                    <button
-                                        v-if="submission.status === 'pending'"
-                                        @click="verify(submission.id)"
-                                        :disabled="verifying === submission.id"
-                                        class="rounded-lg bg-green-500 px-3.5 py-1.5 text-xs font-bold text-white shadow-lg shadow-green-500/20 transition hover:bg-green-400 disabled:opacity-50"
-                                    >
-                                        <span v-if="verifying === submission.id">Mengesahkan...</span>
-                                        <span v-else>Sahkan</span>
-                                    </button>
-                                    <span v-else class="inline-flex items-center gap-1 text-xs font-medium text-green-400">
+                                    <div v-if="submission.status === 'pending'" class="flex items-center gap-2">
+                                        <button
+                                            @click="approve(submission.id)"
+                                            :disabled="processing === submission.id"
+                                            class="rounded-lg bg-green-500 px-3 py-1.5 text-xs font-bold text-white shadow-lg shadow-green-500/20 transition hover:bg-green-400 disabled:opacity-50"
+                                        >
+                                            Lulus
+                                        </button>
+                                        <button
+                                            @click="reject(submission.id)"
+                                            :disabled="processing === submission.id"
+                                            class="rounded-lg bg-red-500 px-3 py-1.5 text-xs font-bold text-white shadow-lg shadow-red-500/20 transition hover:bg-red-400 disabled:opacity-50"
+                                        >
+                                            Tolak
+                                        </button>
+                                    </div>
+                                    <span v-else-if="submission.status === 'verified'" class="inline-flex items-center gap-1 text-xs font-medium text-green-400">
                                         <svg class="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                                         </svg>
-                                        Selesai
+                                        Diluluskan
+                                    </span>
+                                    <span v-else-if="submission.status === 'rejected'" class="inline-flex items-center gap-1 text-xs font-medium text-red-400">
+                                        <svg class="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                                        </svg>
+                                        Ditolak
                                     </span>
                                 </td>
                             </tr>

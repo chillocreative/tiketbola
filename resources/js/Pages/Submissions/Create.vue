@@ -1,26 +1,5 @@
 <script setup>
-import { Head, useForm } from '@inertiajs/vue3';
-import { ref } from 'vue';
-
-const form = useForm({
-    name: '',
-    phone: '',
-    email: '',
-    message: '',
-});
-
-const submitted = ref(false);
-
-const submit = () => {
-    form.post(route('submissions.store'), {
-        preserveScroll: true,
-        onSuccess: () => {
-            form.reset();
-            submitted.value = true;
-            setTimeout(() => submitted.value = false, 6000);
-        },
-    });
-};
+import { Head, Link } from '@inertiajs/vue3';
 </script>
 
 <template>
@@ -89,147 +68,50 @@ const submit = () => {
             </div>
         </div>
 
-        <!-- Form Section -->
+        <!-- Registration Buttons Section -->
         <div class="relative mt-8 pb-12">
             <!-- Decorative divider -->
             <div class="absolute inset-x-0 top-0 flex justify-center">
                 <div class="h-px w-2/3 bg-gradient-to-r from-transparent via-yellow-400/50 to-transparent"></div>
             </div>
 
-            <div class="mx-auto max-w-lg px-4 sm:px-6 lg:max-w-xl">
-                <!-- Section Title -->
-                <div class="mb-6 pt-6 text-center">
-                    <h3 class="text-xl font-bold text-white sm:text-2xl">Daftar Sekarang</h3>
-                    <p class="mt-1 text-sm text-gray-400">Isi borang di bawah untuk menuntut tiket percuma anda</p>
-                </div>
+            <div class="mx-auto max-w-lg px-4 pt-8 sm:px-6 lg:max-w-xl">
+                <h3 class="mb-6 text-center text-xl font-bold text-white sm:text-2xl">Daftar Sekarang</h3>
 
-                <!-- Success Message -->
-                <div
-                    v-if="submitted || $page.props.flash?.success"
-                    class="mb-5 overflow-hidden rounded-xl border border-green-500/30 bg-green-500/10 backdrop-blur-sm"
-                >
-                    <div class="flex items-center gap-3 px-4 py-3">
-                        <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-green-500">
-                            <svg class="h-5 w-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                            </svg>
-                        </div>
-                        <div>
-                            <p class="text-sm font-semibold text-green-300">Berjaya dihantar!</p>
-                            <p class="text-xs text-green-400/80">Pendaftaran anda telah diterima. Sila tunggu pengesahan.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Form Card -->
-                <div class="overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-2xl backdrop-blur-sm">
-                    <div class="p-5 sm:p-7">
-                        <form @submit.prevent="submit" class="space-y-5">
-                            <!-- Name -->
-                            <div>
-                                <label for="name" class="mb-1.5 block text-sm font-semibold text-gray-200">
-                                    Nama Penuh <span class="text-yellow-400">*</span>
-                                </label>
-                                <input
-                                    id="name"
-                                    v-model="form.name"
-                                    type="text"
-                                    required
-                                    class="block w-full rounded-xl border-0 bg-white/10 px-4 py-3 text-sm text-white placeholder-gray-500 ring-1 ring-white/10 transition focus:bg-white/15 focus:ring-2 focus:ring-yellow-400"
-                                    placeholder="Masukkan nama penuh anda"
-                                />
-                                <p v-if="form.errors.name" class="mt-1.5 text-xs text-red-400">{{ form.errors.name }}</p>
-                            </div>
-
-                            <!-- Phone -->
-                            <div>
-                                <label for="phone" class="mb-1.5 block text-sm font-semibold text-gray-200">
-                                    No. Telefon <span class="text-yellow-400">*</span>
-                                </label>
-                                <input
-                                    id="phone"
-                                    v-model="form.phone"
-                                    type="tel"
-                                    required
-                                    class="block w-full rounded-xl border-0 bg-white/10 px-4 py-3 text-sm text-white placeholder-gray-500 ring-1 ring-white/10 transition focus:bg-white/15 focus:ring-2 focus:ring-yellow-400"
-                                    placeholder="cth: 0123456789"
-                                />
-                                <p v-if="form.errors.phone" class="mt-1.5 text-xs text-red-400">{{ form.errors.phone }}</p>
-                            </div>
-
-                            <!-- Email -->
-                            <div>
-                                <label for="email" class="mb-1.5 block text-sm font-semibold text-gray-200">
-                                    Emel <span class="text-yellow-400">*</span>
-                                </label>
-                                <input
-                                    id="email"
-                                    v-model="form.email"
-                                    type="email"
-                                    required
-                                    class="block w-full rounded-xl border-0 bg-white/10 px-4 py-3 text-sm text-white placeholder-gray-500 ring-1 ring-white/10 transition focus:bg-white/15 focus:ring-2 focus:ring-yellow-400"
-                                    placeholder="contoh@email.com"
-                                />
-                                <p v-if="form.errors.email" class="mt-1.5 text-xs text-red-400">{{ form.errors.email }}</p>
-                            </div>
-
-                            <!-- Message -->
-                            <div>
-                                <label for="message" class="mb-1.5 block text-sm font-semibold text-gray-200">
-                                    Mesej / Catatan <span class="text-yellow-400">*</span>
-                                </label>
-                                <textarea
-                                    id="message"
-                                    v-model="form.message"
-                                    rows="3"
-                                    required
-                                    class="block w-full rounded-xl border-0 bg-white/10 px-4 py-3 text-sm text-white placeholder-gray-500 ring-1 ring-white/10 transition focus:bg-white/15 focus:ring-2 focus:ring-yellow-400"
-                                    placeholder="Nyatakan bilangan tiket / sebarang catatan..."
-                                ></textarea>
-                                <p v-if="form.errors.message" class="mt-1.5 text-xs text-red-400">{{ form.errors.message }}</p>
-                            </div>
-
-                            <!-- Submit Button -->
-                            <button
-                                type="submit"
-                                :disabled="form.processing"
-                                class="group relative w-full overflow-hidden rounded-xl bg-gradient-to-r from-yellow-400 to-yellow-500 px-6 py-3.5 text-sm font-extrabold text-gray-900 shadow-lg shadow-yellow-500/25 transition-all hover:from-yellow-300 hover:to-yellow-400 hover:shadow-yellow-500/40 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 focus:ring-offset-[#0B1A2E] disabled:opacity-50"
+                <div class="space-y-4">
+                    <!-- Button 1: AMK -->
+                    <div class="overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition hover:border-yellow-400/30">
+                        <div class="p-5 sm:p-6">
+                            <Link
+                                :href="route('submissions.form', 'amk')"
+                                class="block w-full rounded-xl bg-gradient-to-r from-yellow-400 to-yellow-500 px-6 py-3.5 text-center text-sm font-extrabold text-gray-900 shadow-lg shadow-yellow-500/25 transition-all hover:from-yellow-300 hover:to-yellow-400 hover:shadow-yellow-500/40"
                             >
-                                <span v-if="form.processing" class="flex items-center justify-center gap-2">
-                                    <svg class="h-4 w-4 animate-spin" viewBox="0 0 24 24">
-                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none" />
-                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                                    </svg>
-                                    Menghantar...
-                                </span>
-                                <span v-else class="flex items-center justify-center gap-2">
-                                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5l-1 1m0 0l-7 7m7-7l1 1m-1-1L9 15m6-10l-2 2" />
-                                    </svg>
-                                    Hantar Pendaftaran
-                                </span>
-                            </button>
-                        </form>
+                                Daftar Sekarang
+                            </Link>
+                            <p class="mt-3 text-center text-xs leading-relaxed text-gray-400">
+                                Tajaan Angkatan Muda Keadilan Cabang Kepala Batas & JBPP Pinang Tunggal
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Button 2: MBSP -->
+                    <div class="overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition hover:border-[#00B4D8]/30">
+                        <div class="p-5 sm:p-6">
+                            <Link
+                                :href="route('submissions.form', 'mbsp')"
+                                class="block w-full rounded-xl bg-gradient-to-r from-[#00B4D8] to-[#0096c7] px-6 py-3.5 text-center text-sm font-extrabold text-white shadow-lg shadow-[#00B4D8]/25 transition-all hover:from-[#48cae4] hover:to-[#00B4D8] hover:shadow-[#00B4D8]/40"
+                            >
+                                Daftar Sekarang
+                            </Link>
+                            <p class="mt-3 text-center text-xs leading-relaxed text-gray-400">
+                                Tajaan Ahli Majlis MBSP, Pegawai Penyelaras KADUN Pinang Tunggal, Parti KEADILAN Cabang Kepala Batas
+                            </p>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Footer info -->
-                <div class="mt-6 space-y-3 text-center">
-                    <div class="flex flex-col items-center gap-1 sm:flex-row sm:justify-center sm:gap-4">
-                        <a href="tel:+60164813577" class="inline-flex items-center gap-1.5 text-xs text-gray-400 transition hover:text-green-400">
-                            <svg class="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M6.62 10.79c1.44 2.83 3.76 5.15 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                            </svg>
-                            Zakiri: 016-481 3577
-                        </a>
-                        <a href="tel:+60135190613" class="inline-flex items-center gap-1.5 text-xs text-gray-400 transition hover:text-green-400">
-                            <svg class="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M6.62 10.79c1.44 2.83 3.76 5.15 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                            </svg>
-                            Hafiz: 013-519 0613
-                        </a>
-                    </div>
-                    <p class="text-[10px] text-gray-600">Stadium Bandaraya, Pulau Pinang</p>
+                <!-- Footer -->
+                <div class="mt-8 text-center">
                     <a :href="route('login')" class="inline-block text-[10px] text-gray-600 transition hover:text-yellow-400">
                         Admin
                     </a>

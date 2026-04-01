@@ -14,6 +14,23 @@ class SubmissionController extends Controller
         return Inertia::render('Submissions/Create');
     }
 
+    public function form(string $category)
+    {
+        $categories = [
+            'amk' => 'Tajaan Angkatan Muda Keadilan Cabang Kepala Batas & JBPP Pinang Tunggal',
+            'mbsp' => 'Tajaan Ahli Majlis MBSP, Pegawai Penyelaras KADUN Pinang Tunggal, Parti KEADILAN Cabang Kepala Batas',
+        ];
+
+        if (!isset($categories[$category])) {
+            abort(404);
+        }
+
+        return Inertia::render('Submissions/Form', [
+            'category' => $category,
+            'categoryLabel' => $categories[$category],
+        ]);
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -21,11 +38,12 @@ class SubmissionController extends Controller
             'phone' => 'required|string|max:20',
             'email' => 'required|email|max:255',
             'message' => 'required|string|max:2000',
+            'category' => 'required|in:amk,mbsp',
         ]);
 
         Submission::create($validated);
 
-        return redirect()->route('submissions.create')
+        return redirect()->route('submissions.form', $validated['category'])
             ->with('success', 'Pendaftaran berjaya dihantar!');
     }
 

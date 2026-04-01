@@ -27,6 +27,16 @@ const statusClass = (status) => {
         ? 'bg-green-500/10 text-green-400 ring-1 ring-green-500/20'
         : 'bg-yellow-400/10 text-yellow-400 ring-1 ring-yellow-400/20';
 };
+
+const categoryLabel = (cat) => {
+    return cat === 'mbsp' ? 'MBSP' : 'AMK';
+};
+
+const categoryClass = (cat) => {
+    return cat === 'mbsp'
+        ? 'bg-[#00B4D8]/10 text-[#00B4D8] ring-1 ring-[#00B4D8]/20'
+        : 'bg-yellow-400/10 text-yellow-400 ring-1 ring-yellow-400/20';
+};
 </script>
 
 <template>
@@ -63,6 +73,7 @@ const statusClass = (status) => {
                                 <th class="px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">Telefon</th>
                                 <th class="px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">Emel</th>
                                 <th class="px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">Mesej</th>
+                                <th class="px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">Kategori</th>
                                 <th class="px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">Status</th>
                                 <th class="px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">Tarikh</th>
                                 <th class="px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">Tindakan</th>
@@ -88,6 +99,14 @@ const statusClass = (status) => {
                                 </td>
                                 <td class="max-w-[200px] truncate px-4 py-4 text-sm text-gray-400">
                                     {{ submission.message }}
+                                </td>
+                                <td class="whitespace-nowrap px-4 py-4 text-sm">
+                                    <span
+                                        :class="categoryClass(submission.category)"
+                                        class="inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold"
+                                    >
+                                        {{ categoryLabel(submission.category) }}
+                                    </span>
                                 </td>
                                 <td class="whitespace-nowrap px-4 py-4 text-sm">
                                     <span

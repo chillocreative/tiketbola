@@ -12,5 +12,6 @@ class Submission extends Model
         'email',
         'message',
         'status',
+        'category',
     ];
 }

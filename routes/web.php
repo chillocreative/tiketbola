@@ -7,17 +7,25 @@ use App\Models\Submission;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-// Public form (homepage)
+// Public pages
 Route::get('/', [SubmissionController::class, 'create'])->name('submissions.create');
+Route::get('/daftar/{category}', [SubmissionController::class, 'form'])->name('submissions.form');
 Route::post('/submissions', [SubmissionController::class, 'store'])->name('submissions.store');
 
-// Dashboard with stats
+// Dashboard with stats per category
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard', [
         'stats' => [
-            'total' => Submission::count(),
-            'pending' => Submission::where('status', 'pending')->count(),
-            'verified' => Submission::where('status', 'verified')->count(),
+            'amk' => [
+                'total' => Submission::where('category', 'amk')->count(),
+                'pending' => Submission::where('category', 'amk')->where('status', 'pending')->count(),
+                'verified' => Submission::where('category', 'amk')->where('status', 'verified')->count(),
+            ],
+            'mbsp' => [
+                'total' => Submission::where('category', 'mbsp')->count(),
+                'pending' => Submission::where('category', 'mbsp')->where('status', 'pending')->count(),
+                'verified' => Submission::where('category', 'mbsp')->where('status', 'verified')->count(),
+            ],
         ],
     ]);
 })->middleware(['auth', 'verified'])->name('dashboard');

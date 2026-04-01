@@ -16,53 +16,65 @@ defineProps({
         </template>
 
         <div class="p-4 sm:p-6 lg:p-8">
-            <!-- Stats Cards -->
-            <div class="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
-                <!-- Total -->
-                <div class="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/5 p-6 backdrop-blur-sm transition hover:border-white/10">
-                    <div class="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-[#00B4D8]/10 blur-2xl transition group-hover:bg-[#00B4D8]/20"></div>
-                    <div class="relative">
-                        <div class="flex items-center gap-3">
-                            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-[#00B4D8]/10">
-                                <svg class="h-5 w-5 text-[#00B4D8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
-                                </svg>
-                            </div>
-                            <span class="text-sm font-medium text-gray-400">Jumlah Pendaftaran</span>
+
+            <!-- AMK Card -->
+            <div class="mb-6">
+                <div class="mb-3 flex items-center gap-2">
+                    <div class="h-3 w-3 rounded-full bg-yellow-400"></div>
+                    <h3 class="text-sm font-bold text-yellow-400 uppercase tracking-wider">AMK & JBPP Pinang Tunggal</h3>
+                </div>
+                <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+                    <div class="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/5 p-5 backdrop-blur-sm transition hover:border-yellow-400/20">
+                        <div class="absolute -right-4 -top-4 h-20 w-20 rounded-full bg-yellow-400/10 blur-2xl transition group-hover:bg-yellow-400/20"></div>
+                        <div class="relative">
+                            <span class="text-xs font-medium text-gray-500">Jumlah</span>
+                            <div class="mt-1 text-3xl font-extrabold text-white">{{ stats?.amk?.total || 0 }}</div>
                         </div>
-                        <div class="mt-4 text-4xl font-extrabold text-white">{{ stats?.total || 0 }}</div>
+                    </div>
+                    <div class="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/5 p-5 backdrop-blur-sm transition hover:border-yellow-400/20">
+                        <div class="absolute -right-4 -top-4 h-20 w-20 rounded-full bg-yellow-400/10 blur-2xl transition group-hover:bg-yellow-400/20"></div>
+                        <div class="relative">
+                            <span class="text-xs font-medium text-gray-500">Menunggu</span>
+                            <div class="mt-1 text-3xl font-extrabold text-yellow-400">{{ stats?.amk?.pending || 0 }}</div>
+                        </div>
+                    </div>
+                    <div class="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/5 p-5 backdrop-blur-sm transition hover:border-green-500/20">
+                        <div class="absolute -right-4 -top-4 h-20 w-20 rounded-full bg-green-500/10 blur-2xl transition group-hover:bg-green-500/20"></div>
+                        <div class="relative">
+                            <span class="text-xs font-medium text-gray-500">Disahkan</span>
+                            <div class="mt-1 text-3xl font-extrabold text-green-400">{{ stats?.amk?.verified || 0 }}</div>
+                        </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Pending -->
-                <div class="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/5 p-6 backdrop-blur-sm transition hover:border-white/10">
-                    <div class="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-yellow-400/10 blur-2xl transition group-hover:bg-yellow-400/20"></div>
-                    <div class="relative">
-                        <div class="flex items-center gap-3">
-                            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-yellow-400/10">
-                                <svg class="h-5 w-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                            </div>
-                            <span class="text-sm font-medium text-gray-400">Menunggu Pengesahan</span>
-                        </div>
-                        <div class="mt-4 text-4xl font-extrabold text-yellow-400">{{ stats?.pending || 0 }}</div>
-                    </div>
+            <!-- MBSP Card -->
+            <div class="mb-8">
+                <div class="mb-3 flex items-center gap-2">
+                    <div class="h-3 w-3 rounded-full bg-[#00B4D8]"></div>
+                    <h3 class="text-sm font-bold text-[#00B4D8] uppercase tracking-wider">MBSP & KADUN Pinang Tunggal</h3>
                 </div>
-
-                <!-- Verified -->
-                <div class="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/5 p-6 backdrop-blur-sm transition hover:border-white/10">
-                    <div class="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-green-500/10 blur-2xl transition group-hover:bg-green-500/20"></div>
-                    <div class="relative">
-                        <div class="flex items-center gap-3">
-                            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-green-500/10">
-                                <svg class="h-5 w-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                            </div>
-                            <span class="text-sm font-medium text-gray-400">Telah Disahkan</span>
+                <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+                    <div class="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/5 p-5 backdrop-blur-sm transition hover:border-[#00B4D8]/20">
+                        <div class="absolute -right-4 -top-4 h-20 w-20 rounded-full bg-[#00B4D8]/10 blur-2xl transition group-hover:bg-[#00B4D8]/20"></div>
+                        <div class="relative">
+                            <span class="text-xs font-medium text-gray-500">Jumlah</span>
+                            <div class="mt-1 text-3xl font-extrabold text-white">{{ stats?.mbsp?.total || 0 }}</div>
                         </div>
-                        <div class="mt-4 text-4xl font-extrabold text-green-400">{{ stats?.verified || 0 }}</div>
+                    </div>
+                    <div class="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/5 p-5 backdrop-blur-sm transition hover:border-yellow-400/20">
+                        <div class="absolute -right-4 -top-4 h-20 w-20 rounded-full bg-yellow-400/10 blur-2xl transition group-hover:bg-yellow-400/20"></div>
+                        <div class="relative">
+                            <span class="text-xs font-medium text-gray-500">Menunggu</span>
+                            <div class="mt-1 text-3xl font-extrabold text-yellow-400">{{ stats?.mbsp?.pending || 0 }}</div>
+                        </div>
+                    </div>
+                    <div class="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/5 p-5 backdrop-blur-sm transition hover:border-green-500/20">
+                        <div class="absolute -right-4 -top-4 h-20 w-20 rounded-full bg-green-500/10 blur-2xl transition group-hover:bg-green-500/20"></div>
+                        <div class="relative">
+                            <span class="text-xs font-medium text-gray-500">Disahkan</span>
+                            <div class="mt-1 text-3xl font-extrabold text-green-400">{{ stats?.mbsp?.verified || 0 }}</div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -35,10 +35,12 @@ class SubmissionController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'ic_number' => 'required|string|digits_between:1,12',
+            'ic_number' => 'required|string|digits_between:1,12|unique:submissions,ic_number',
             'phone' => 'required|string|digits_between:1,11',
             'address' => 'required|string|max:1000',
             'category' => 'required|in:amk,mbsp',
+        ], [
+            'ic_number.unique' => 'No Kad Pengenalan ini telah didaftarkan. Setiap individu hanya dibenarkan satu pendaftaran sahaja.',
         ]);
 
         $validated['name'] = strtoupper($validated['name']);

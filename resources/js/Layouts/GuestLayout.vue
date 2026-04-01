@@ -4,7 +4,7 @@ import { Link } from '@inertiajs/vue3';
 </script>
 
 <template>
-    <div class="flex min-h-screen flex-col items-center bg-[#0B1A2E] px-4 pt-8 sm:justify-center sm:pt-0">
+    <div class="flex min-h-screen flex-col items-center bg-[#0B1A2E] px-4 pt-16 sm:justify-center sm:pt-0">
         <!-- Background glow effects -->
         <div class="pointer-events-none fixed inset-0 overflow-hidden">
             <div class="absolute -top-40 -left-40 h-80 w-80 rounded-full bg-yellow-400/5 blur-3xl"></div>

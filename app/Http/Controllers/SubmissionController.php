@@ -216,4 +216,39 @@ class SubmissionController extends Controller
 
         return back()->with('success', 'Pendaftaran berjaya dipadam.');
     }
+
+    public function bulkDelete(Request $request)
+    {
+        $validated = $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'integer|exists:submissions,id',
+        ]);
+
+        Submission::whereIn('id', $validated['ids'])->delete();
+
+        return back()->with('success', count($validated['ids']) . ' pendaftaran berjaya dipadam.');
+    }
+
+    public function export()
+    {
+        $submissions = Submission::latest()->get();
+
+        $csv = "\xEF\xBB\xBF"; // UTF-8 BOM for Excel
+        $csv .= "Nama,No KP,Telefon,Alamat,Kategori,Status,Tarikh\n";
+
+        foreach ($submissions as $s) {
+            $csv .= '"' . str_replace('"', '""', $s->name) . '",';
+            $csv .= $s->ic_number . ',';
+            $csv .= $s->phone . ',';
+            $csv .= '"' . str_replace('"', '""', $s->address) . '",';
+            $csv .= ($s->category === 'mbsp' ? 'MBSP' : 'AMK') . ',';
+            $csv .= ($s->status === 'verified' ? 'Diluluskan' : ($s->status === 'rejected' ? 'Ditolak' : 'Menunggu')) . ',';
+            $csv .= $s->created_at->format('d/m/Y') . "\n";
+        }
+
+        return response($csv, 200, [
+            'Content-Type' => 'text/csv; charset=UTF-8',
+            'Content-Disposition' => 'attachment; filename="pendaftaran_' . date('Ymd') . '.csv"',
+        ]);
+    }
 }

@@ -40,6 +40,8 @@ Route::middleware('auth')->group(function () {
 
     // Submissions management
     Route::get('/admin/submissions', [SubmissionController::class, 'index'])->name('admin.submissions');
+    Route::post('/admin/submissions/bulk-delete', [SubmissionController::class, 'bulkDelete'])->name('admin.submissions.bulkDelete');
+    Route::get('/admin/submissions/export', [SubmissionController::class, 'export'])->name('admin.submissions.export');
     Route::get('/admin/submissions/create', [SubmissionController::class, 'adminCreate'])->name('admin.submissions.create');
     Route::post('/admin/submissions', [SubmissionController::class, 'adminStore'])->name('admin.submissions.store');
     Route::get('/admin/submissions/{submission}/edit', [SubmissionController::class, 'edit'])->name('admin.submissions.edit');

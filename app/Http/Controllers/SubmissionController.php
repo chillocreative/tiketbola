@@ -9,9 +9,29 @@ use Inertia\Inertia;
 
 class SubmissionController extends Controller
 {
+    public const QUOTAS = [
+        'amk' => 50,
+        'mbsp' => 100,
+    ];
+
+    public static function getApprovedCount(string $category): int
+    {
+        return Submission::where('category', $category)->where('status', 'verified')->count();
+    }
+
+    public static function getBalance(string $category): int
+    {
+        return max(0, self::QUOTAS[$category] - self::getApprovedCount($category));
+    }
+
     public function create()
     {
-        return Inertia::render('Submissions/Create');
+        return Inertia::render('Submissions/Create', [
+            'quotas' => [
+                'amk' => ['total' => self::QUOTAS['amk'], 'balance' => self::getBalance('amk')],
+                'mbsp' => ['total' => self::QUOTAS['mbsp'], 'balance' => self::getBalance('mbsp')],
+            ],
+        ]);
     }
 
     public function form(string $category)
@@ -28,6 +48,8 @@ class SubmissionController extends Controller
         return Inertia::render('Submissions/Form', [
             'category' => $category,
             'categoryLabel' => $categories[$category],
+            'quota' => self::QUOTAS[$category],
+            'balance' => self::getBalance($category),
         ]);
     }
 
@@ -68,6 +90,10 @@ class SubmissionController extends Controller
 
         return Inertia::render('Admin/Submissions/Index', [
             'submissions' => $submissions,
+            'quotas' => [
+                'amk' => ['total' => self::QUOTAS['amk'], 'approved' => self::getApprovedCount('amk'), 'balance' => self::getBalance('amk')],
+                'mbsp' => ['total' => self::QUOTAS['mbsp'], 'approved' => self::getApprovedCount('mbsp'), 'balance' => self::getBalance('mbsp')],
+            ],
         ]);
     }
 
@@ -75,6 +101,11 @@ class SubmissionController extends Controller
     {
         if ($submission->status !== 'pending') {
             return back()->with('info', 'Permohonan ini telah diproses.');
+        }
+
+        // Check quota before approving
+        if (self::getBalance($submission->category) <= 0) {
+            return back()->with('warning', 'Kuota untuk kategori ini telah penuh. Tidak boleh meluluskan lagi.');
         }
 
         $submission->update(['status' => 'verified']);

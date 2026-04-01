@@ -37,19 +37,19 @@ const showingNavigationDropdown = ref(false);
                                     :href="route('dashboard')"
                                     :active="route().current('dashboard')"
                                 >
-                                    Dashboard
+                                    Papan Pemuka
                                 </NavLink>
                                 <NavLink
                                     :href="route('admin.submissions')"
                                     :active="route().current('admin.submissions')"
                                 >
-                                    Submissions
+                                    Pendaftaran
                                 </NavLink>
                                 <NavLink
                                     :href="route('admin.sendora.edit')"
                                     :active="route().current('admin.sendora.*')"
                                 >
-                                    Sendora Settings
+                                    Tetapan Sendora
                                 </NavLink>
                             </div>
                         </div>
@@ -156,19 +156,19 @@ const showingNavigationDropdown = ref(false);
                             :href="route('dashboard')"
                             :active="route().current('dashboard')"
                         >
-                            Dashboard
+                            Papan Pemuka
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
                             :href="route('admin.submissions')"
                             :active="route().current('admin.submissions')"
                         >
-                            Submissions
+                            Pendaftaran
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
                             :href="route('admin.sendora.edit')"
                             :active="route().current('admin.sendora.*')"
                         >
-                            Sendora Settings
+                            Tetapan Sendora
                         </ResponsiveNavLink>
                     </div>
 

@@ -26,7 +26,7 @@ class SubmissionController extends Controller
         Submission::create($validated);
 
         return redirect()->route('submissions.create')
-            ->with('success', 'Submission sent successfully!');
+            ->with('success', 'Pendaftaran berjaya dihantar!');
     }
 
     public function index()
@@ -41,19 +41,19 @@ class SubmissionController extends Controller
     public function verify(Request $request, Submission $submission)
     {
         if ($submission->status === 'verified') {
-            return back()->with('info', 'Already verified.');
+            return back()->with('info', 'Sudah disahkan.');
         }
 
         $whatsapp = new WhatsappService();
-        $message = "Hi {$submission->name}, your submission has been verified. Thank you!";
+        $message = "Assalamualaikum {$submission->name}, pendaftaran tiket bola anda telah disahkan. Jumpa anda di Stadium Bandaraya, Pulau Pinang! Terima kasih.";
         $result = $whatsapp->send($submission->phone, $message, $submission->id);
 
         $submission->update(['status' => 'verified']);
 
         if ($result['success']) {
-            return back()->with('success', 'Submission verified and WhatsApp notification sent.');
+            return back()->with('success', 'Pendaftaran disahkan dan notifikasi WhatsApp telah dihantar.');
         }
 
-        return back()->with('warning', 'Submission verified but WhatsApp notification failed: ' . $result['message']);
+        return back()->with('warning', 'Pendaftaran disahkan tetapi notifikasi WhatsApp gagal: ' . $result['message']);
     }
 }

@@ -70,9 +70,9 @@ const categoryClass = (cat) => {
                             <tr class="border-b border-white/5">
                                 <th class="px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">#</th>
                                 <th class="px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">Nama</th>
+                                <th class="px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">No KP</th>
                                 <th class="px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">Telefon</th>
-                                <th class="px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">Emel</th>
-                                <th class="px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">Mesej</th>
+                                <th class="px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">Alamat</th>
                                 <th class="px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">Kategori</th>
                                 <th class="px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">Status</th>
                                 <th class="px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">Tarikh</th>
@@ -92,13 +92,13 @@ const categoryClass = (cat) => {
                                     {{ submission.name }}
                                 </td>
                                 <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-400">
-                                    {{ submission.phone }}
+                                    {{ submission.ic_number }}
                                 </td>
                                 <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-400">
-                                    {{ submission.email }}
+                                    {{ submission.phone }}
                                 </td>
                                 <td class="max-w-[200px] truncate px-4 py-4 text-sm text-gray-400">
-                                    {{ submission.message }}
+                                    {{ submission.address }}
                                 </td>
                                 <td class="whitespace-nowrap px-4 py-4 text-sm">
                                     <span

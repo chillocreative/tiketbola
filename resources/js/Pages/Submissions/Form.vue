@@ -9,9 +9,9 @@ const props = defineProps({
 
 const form = useForm({
     name: '',
+    ic_number: '',
     phone: '',
-    email: '',
-    message: '',
+    address: '',
     category: props.category,
 });
 
@@ -21,14 +21,12 @@ const submit = () => {
     form.post(route('submissions.store'), {
         preserveScroll: true,
         onSuccess: () => {
-            form.reset('name', 'phone', 'email', 'message');
+            form.reset('name', 'ic_number', 'phone', 'address');
             submitted.value = true;
             setTimeout(() => submitted.value = false, 6000);
         },
     });
 };
-
-const accentColor = props.category === 'amk' ? 'yellow' : 'cyan';
 </script>
 
 <template>
@@ -79,10 +77,10 @@ const accentColor = props.category === 'amk' ? 'yellow' : 'cyan';
                 <div class="overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-2xl backdrop-blur-sm">
                     <div class="p-5 sm:p-7">
                         <form @submit.prevent="submit" class="space-y-5">
-                            <!-- Name -->
+                            <!-- Nama -->
                             <div>
                                 <label for="name" class="mb-1.5 block text-sm font-semibold text-gray-200">
-                                    Nama Penuh <span class="text-yellow-400">*</span>
+                                    Nama <span class="text-yellow-400">*</span>
                                 </label>
                                 <input
                                     id="name"
@@ -90,15 +88,31 @@ const accentColor = props.category === 'amk' ? 'yellow' : 'cyan';
                                     type="text"
                                     required
                                     class="block w-full rounded-xl border-0 bg-white/10 px-4 py-3 text-sm text-white placeholder-gray-500 ring-1 ring-white/10 transition focus:bg-white/15 focus:ring-2 focus:ring-yellow-400"
-                                    placeholder="Masukkan nama penuh anda"
+                                    placeholder="Masukkan nama penuh"
                                 />
                                 <p v-if="form.errors.name" class="mt-1.5 text-xs text-red-400">{{ form.errors.name }}</p>
                             </div>
 
-                            <!-- Phone -->
+                            <!-- No Kad Pengenalan -->
+                            <div>
+                                <label for="ic_number" class="mb-1.5 block text-sm font-semibold text-gray-200">
+                                    No Kad Pengenalan <span class="text-yellow-400">*</span>
+                                </label>
+                                <input
+                                    id="ic_number"
+                                    v-model="form.ic_number"
+                                    type="text"
+                                    required
+                                    class="block w-full rounded-xl border-0 bg-white/10 px-4 py-3 text-sm text-white placeholder-gray-500 ring-1 ring-white/10 transition focus:bg-white/15 focus:ring-2 focus:ring-yellow-400"
+                                    placeholder="cth: 901234-10-5678"
+                                />
+                                <p v-if="form.errors.ic_number" class="mt-1.5 text-xs text-red-400">{{ form.errors.ic_number }}</p>
+                            </div>
+
+                            <!-- No Telefon -->
                             <div>
                                 <label for="phone" class="mb-1.5 block text-sm font-semibold text-gray-200">
-                                    No. Telefon <span class="text-yellow-400">*</span>
+                                    No Telefon <span class="text-yellow-400">*</span>
                                 </label>
                                 <input
                                     id="phone"
@@ -111,36 +125,20 @@ const accentColor = props.category === 'amk' ? 'yellow' : 'cyan';
                                 <p v-if="form.errors.phone" class="mt-1.5 text-xs text-red-400">{{ form.errors.phone }}</p>
                             </div>
 
-                            <!-- Email -->
+                            <!-- Alamat Rumah -->
                             <div>
-                                <label for="email" class="mb-1.5 block text-sm font-semibold text-gray-200">
-                                    Emel <span class="text-yellow-400">*</span>
-                                </label>
-                                <input
-                                    id="email"
-                                    v-model="form.email"
-                                    type="email"
-                                    required
-                                    class="block w-full rounded-xl border-0 bg-white/10 px-4 py-3 text-sm text-white placeholder-gray-500 ring-1 ring-white/10 transition focus:bg-white/15 focus:ring-2 focus:ring-yellow-400"
-                                    placeholder="contoh@email.com"
-                                />
-                                <p v-if="form.errors.email" class="mt-1.5 text-xs text-red-400">{{ form.errors.email }}</p>
-                            </div>
-
-                            <!-- Message -->
-                            <div>
-                                <label for="message" class="mb-1.5 block text-sm font-semibold text-gray-200">
-                                    Mesej / Catatan <span class="text-yellow-400">*</span>
+                                <label for="address" class="mb-1.5 block text-sm font-semibold text-gray-200">
+                                    Alamat Rumah <span class="text-yellow-400">*</span>
                                 </label>
                                 <textarea
-                                    id="message"
-                                    v-model="form.message"
+                                    id="address"
+                                    v-model="form.address"
                                     rows="3"
                                     required
                                     class="block w-full rounded-xl border-0 bg-white/10 px-4 py-3 text-sm text-white placeholder-gray-500 ring-1 ring-white/10 transition focus:bg-white/15 focus:ring-2 focus:ring-yellow-400"
-                                    placeholder="Nyatakan bilangan tiket / sebarang catatan..."
+                                    placeholder="Masukkan alamat rumah penuh"
                                 ></textarea>
-                                <p v-if="form.errors.message" class="mt-1.5 text-xs text-red-400">{{ form.errors.message }}</p>
+                                <p v-if="form.errors.address" class="mt-1.5 text-xs text-red-400">{{ form.errors.address }}</p>
                             </div>
 
                             <!-- Submit Button -->

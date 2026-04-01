@@ -8,9 +8,9 @@ class Submission extends Model
 {
     protected $fillable = [
         'name',
+        'ic_number',
         'phone',
-        'email',
-        'message',
+        'address',
         'status',
         'category',
     ];

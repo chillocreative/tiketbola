@@ -65,6 +65,15 @@ import { Head, Link } from '@inertiajs/vue3';
                         <span class="text-sm font-extrabold text-yellow-900">150 TIKET PERCUMA</span>
                     </div>
                 </div>
+
+                <!-- Syarat Kelayakan -->
+                <div class="mt-5 text-center">
+                    <p class="text-sm font-bold text-white">Syarat Kelayakan:</p>
+                    <ul class="mt-1.5 space-y-0.5 text-xs text-gray-400">
+                        <li>- 18 Tahun ke atas</li>
+                        <li>- Mestilah pengundi di Parlimen Kepala Batas</li>
+                    </ul>
+                </div>
             </div>
         </div>
 

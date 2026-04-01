@@ -119,7 +119,8 @@ class SubmissionController extends Controller
             . "Tarikh: *Jumaat, 3 April 2026*\n"
             . "Masa: *8.30 malam - 10.30 malam*\n\n"
             . "Google Maps: https://maps.app.goo.gl/U4c5GUAbxWbJaryb7\n\n"
-            . "Sila bawa kad pengenalan untuk pengesahan.\n\n"
+            . "Sila bawa kad pengenalan untuk pengesahan.\n"
+            . "Wakil tidak dibenarkan mengambil bagi pihak.\n\n"
             . "Jumpa anda di sana! Terima kasih.";
         $result = $whatsapp->send($submission->phone, $message, $submission->id);
 

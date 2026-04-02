@@ -61,6 +61,13 @@ const bulkDelete = () => {
     });
 };
 
+const copiedId = ref(null);
+const copyIc = (ic, id) => {
+    navigator.clipboard.writeText(ic);
+    copiedId.value = id;
+    setTimeout(() => { copiedId.value = null; }, 1500);
+};
+
 const statusLabel = (s) => ({ verified: 'Diluluskan', rejected: 'Ditolak', pending: 'Menunggu' }[s] || s);
 const statusClass = (s) => ({
     verified: 'bg-green-500/10 text-green-400 ring-1 ring-green-500/20',
@@ -156,7 +163,10 @@ const categoryClass = (c) => c === 'mbsp'
                                 </td>
                                 <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500">{{ (submissions.current_page - 1) * submissions.per_page + i + 1 }}</td>
                                 <td class="whitespace-nowrap px-4 py-4 text-sm font-semibold text-white">{{ s.name }}</td>
-                                <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-400">{{ s.ic_number }}</td>
+                                <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-400 cursor-pointer hover:text-yellow-400 transition" @click.stop="copyIc(s.ic_number, s.id)" :title="copiedId === s.id ? 'Disalin!' : 'Klik untuk salin'">
+                                    {{ s.ic_number }}
+                                    <span v-if="copiedId === s.id" class="ml-1 text-xs text-green-400">Disalin!</span>
+                                </td>
                                 <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-400">{{ s.phone }}</td>
                                 <td class="max-w-[200px] truncate px-4 py-4 text-sm text-gray-400">{{ s.address }}</td>
                                 <td class="whitespace-nowrap px-4 py-4 text-sm">

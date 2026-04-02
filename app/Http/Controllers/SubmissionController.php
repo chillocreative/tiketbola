@@ -113,14 +113,16 @@ class SubmissionController extends Controller
         // WhatsApp: Notify user approved with collection details
         $whatsapp = new WhatsappService();
         $message = "Assalamualaikum dan salam sejahtera {$submission->name},\n\n"
-            . "Tahniah! Permohonan tiket bola percuma anda telah *DILULUSKAN*.\n\n"
+            . "Tahniah! Permohonan anda untuk mendapatkan tajaan tiket percuma telah berjaya.\n\n"
+            . "Sila pastikan anda telah like, comment dan share posting seperti yang ditetapkan. "
+            . "Anda juga dikehendaki menunjukkan bukti kepada urusetia semasa menuntut tiket.\n\n"
+            . "Pihak urusetia berhak untuk menolak tuntutan sekiranya anda gagal mengemukakan bukti tersebut.\n\n"
             . "Sila hadir untuk menebus dan mengambil tiket anda di:\n\n"
             . "Lokasi: *Dewan Penang 2030, Paya Keladi, Kepala Batas*\n"
             . "Tarikh: *Jumaat, 3 April 2026*\n"
             . "Masa: *8.30 malam - 10.30 malam*\n\n"
             . "Google Maps: https://maps.app.goo.gl/U4c5GUAbxWbJaryb7\n\n"
-            . "Sila bawa kad pengenalan untuk pengesahan.\n"
-            . "Wakil tidak dibenarkan mengambil bagi pihak.\n\n"
+            . "Sila bawa kad pengenalan untuk pengesahan. Wakil tidak dibenarkan.\n\n"
             . "Jumpa anda di sana! Terima kasih.";
         $result = $whatsapp->send($submission->phone, $message, $submission->id);
 

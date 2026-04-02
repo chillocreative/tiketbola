@@ -73,10 +73,10 @@ const submit = () => {
                             </svg>
                         </div>
                         <h3 class="mb-2 text-xl font-bold text-white">Pendaftaran Berjaya!</h3>
-                        <p class="mb-3 text-sm font-bold text-yellow-400">Sila klik pautan di bawah:</p>
                         <p class="mb-1 text-sm text-gray-300">Terima kasih kerana mendaftar.</p>
-                        <p class="text-sm text-gray-400">Anda akan menerima notifikasi WhatsApp mengenai status permohonan anda.</p>
-                        <p class="mt-3 text-sm font-bold text-yellow-400">Jangan lupa like, comment dan share untuk melayakkan anda membuat tuntutan tajaan tiket percuma!!</p>
+                        <p class="mb-3 text-sm text-gray-400">Anda akan menerima notifikasi WhatsApp mengenai status permohonan anda.</p>
+                        <h3 class="mb-2 text-lg font-bold text-yellow-400">Sila klik pautan di bawah:</h3>
+                        <h3 class="text-lg font-bold text-yellow-400">Jangan lupa like, comment dan share untuk melayakkan anda membuat tuntutan tajaan tiket percuma!!</h3>
                     </div>
                     <a
                         :href="route('submissions.create')"

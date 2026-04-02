@@ -143,11 +143,10 @@ class SubmissionController extends Controller
 
         // WhatsApp: Notify user application rejected
         $whatsapp = new WhatsappService();
-        $message = "Assalamualaikum dan salam sejahtera {$submission->name},\n\n"
-            . "Terima kasih kerana mendaftar untuk Tiket Bola Percuma Pulau Pinang vs Sabah.\n\n"
-            . "Dukacita dimaklumkan bahawa permohonan anda *TIDAK BERJAYA* pada kali ini.\n\n"
-            . "Kami menghargai minat anda dan berharap dapat melibatkan anda pada masa akan datang.\n\n"
-            . "Terima kasih atas masa anda.";
+        $message = "Assalamualaikum dan salam sejahtera {$submission->name}.\n\n"
+            . "Terima kasih atas permohonan anda. Dukacita dimaklumkan bahawa permohonan anda untuk mendapatkan tajaan tiket percuma adalah tidak berjaya.\n\n"
+            . "Permohonan adalah terhad dan diproses berdasarkan kelayakan serta kekosongan yang ada.\n\n"
+            . "Terima kasih atas minat dan sokongan anda.";
         $result = $whatsapp->send($submission->phone, $message, $submission->id);
 
         if ($result['success']) {

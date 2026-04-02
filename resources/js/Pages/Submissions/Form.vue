@@ -77,6 +77,7 @@ const submit = () => {
                         <p class="mb-3 text-sm text-gray-400">Anda akan menerima notifikasi WhatsApp mengenai status permohonan anda.</p>
                         <h3 class="mb-2 text-lg font-bold text-yellow-400">Sila klik pautan di bawah:</h3>
                         <a v-if="category === 'mbsp'" href="https://www.facebook.com/share/p/1L8vDksvLu/" target="_blank" class="mb-3 inline-block text-sm font-bold text-blue-400 underline hover:text-blue-300">https://www.facebook.com/share/p/1L8vDksvLu/</a>
+                        <a v-if="category === 'amk'" href="https://www.facebook.com/share/18RFeF1gjG/?mibextid=wwXIfr" target="_blank" class="mb-3 inline-block text-sm font-bold text-blue-400 underline hover:text-blue-300">https://www.facebook.com/share/18RFeF1gjG/?mibextid=wwXIfr</a>
                         <h3 class="mb-3 text-lg font-bold text-yellow-400">Jangan lupa like, comment dan share untuk melayakkan anda membuat tuntutan tajaan tiket percuma!!</h3>
                         <p class="text-lg font-bold text-yellow-400">#HariaPenangHaria</p>
                     </div>

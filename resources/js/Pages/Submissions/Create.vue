@@ -81,19 +81,25 @@ const showFullModal = ref(false);
                             <svg class="mt-0.5 h-4 w-4 shrink-0 text-green-400" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                             </svg>
-                            <span class="text-sm text-gray-300">Berumur 17 tahun dan ke atas (alamat IC mestilah di Kepala Batas)</span>
+                            <span class="text-sm text-gray-300">Terbuka kepada individu berumur 18 tahun dan ke atas yang merupakan pengundi Parlimen Kepala Batas.</span>
                         </div>
                         <div class="flex items-start gap-2.5">
                             <svg class="mt-0.5 h-4 w-4 shrink-0 text-green-400" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                             </svg>
-                            <span class="text-sm text-gray-300">Pengundi di Parlimen Kepala Batas</span>
+                            <span class="text-sm text-gray-300">Penyertaan juga dibuka kepada individu berumur 17 tahun, dengan syarat alamat pada kad pengenalan adalah dalam Parlimen Kepala Batas.</span>
                         </div>
                         <div class="flex items-start gap-2.5">
                             <svg class="mt-0.5 h-4 w-4 shrink-0 text-green-400" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                             </svg>
-                            <span class="text-sm text-gray-300">1 Keluarga hanya boleh menebus 2 tiket sahaja</span>
+                            <span class="text-sm text-gray-300">Setiap individu hanya layak menuntut satu (1) tiket sahaja.</span>
+                        </div>
+                        <div class="flex items-start gap-2.5">
+                            <svg class="mt-0.5 h-4 w-4 shrink-0 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                            <span class="text-sm text-gray-300">Peserta diwajibkan untuk like, komen dan share posting tajaan tiket, serta meninggalkan komen dengan hashtag #HariaPenangHaria.</span>
                         </div>
                     </div>
                 </div>

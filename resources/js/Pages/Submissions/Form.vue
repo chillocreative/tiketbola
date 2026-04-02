@@ -138,7 +138,7 @@ const submit = () => {
                                 <input type="checkbox" id="agree" v-model="agreed"
                                     class="mt-0.5 h-4 w-4 shrink-0 rounded border-white/20 bg-white/10 text-yellow-400 focus:ring-yellow-400 focus:ring-offset-0" />
                                 <label for="agree" class="cursor-pointer text-xs leading-relaxed text-gray-400">
-                                    Saya dengan ini bersetuju dengan syarat-syarat yang telah ditetapkan seperti di atas. Saya juga faham bahawa pihak urusetia mempunyai hak penuh untuk memberi atau menolak permohonan tiket bola percuma ini tanpa sebarang alasan.
+                                    Saya dengan ini mengesahkan persetujuan terhadap semua syarat yang ditetapkan oleh pihak penaja, termasuk keperluan untuk like, comment dan share posting berkaitan tajaan tiket percuma. Tindakan tersebut akan saya lakukan sejurus selepas permohonan ini dikemukakan.
                                 </label>
                             </div>
 

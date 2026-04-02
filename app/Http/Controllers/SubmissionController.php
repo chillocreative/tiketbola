@@ -118,11 +118,17 @@ class SubmissionController extends Controller
             . "Anda juga dikehendaki menunjukkan bukti kepada urusetia semasa menuntut tiket.\n\n"
             . "Pihak urusetia berhak untuk menolak tuntutan sekiranya anda gagal mengemukakan bukti tersebut.\n\n"
             . "Sila hadir untuk menebus dan mengambil tiket anda di:\n\n"
-            . "Lokasi: *Dewan Penang 2030, Paya Keladi, Kepala Batas*\n"
-            . "Tarikh: *Jumaat, 3 April 2026*\n"
-            . "Masa: *8.30 malam - 10.30 malam*\n\n"
+            . "Lokasi: Dewan Penang 2030, Paya Keladi, Kepala Batas\n"
+            . "Tarikh / Masa:\n"
+            . "Jumaat, 3 April 2026 (8.30 malam - 10.30 malam)\n"
+            . "Sabtu, 4 April 2026 (10.00 pagi - 12.00 tengah hari)\n\n"
             . "Google Maps: https://maps.app.goo.gl/U4c5GUAbxWbJaryb7\n\n"
             . "Sila bawa kad pengenalan untuk pengesahan. Wakil tidak dibenarkan.\n\n"
+            . "*PERINGATAN TUNTUTAN TIKET*\n\n"
+            . "Sekiranya tiada tuntutan tiket dibuat sehingga hari Sabtu seperti yang ditetapkan, "
+            . "permohonan anda akan terbatal secara automatik.\n\n"
+            . "Sebarang masalah berkaitan tuntutan tiket hendaklah dimaklumkan kepada urusetia "
+            . "sebelum jam 12.00 tengah hari pada hari Sabtu.\n\n"
             . "Jumpa anda di sana! Terima kasih.";
         $result = $whatsapp->send($submission->phone, $message, $submission->id);
 

@@ -76,7 +76,8 @@ const submit = () => {
                         <p class="mb-1 text-sm text-gray-300">Terima kasih kerana mendaftar.</p>
                         <p class="mb-3 text-sm text-gray-400">Anda akan menerima notifikasi WhatsApp mengenai status permohonan anda.</p>
                         <h3 class="mb-2 text-lg font-bold text-yellow-400">Sila klik pautan di bawah:</h3>
-                        <h3 class="text-lg font-bold text-yellow-400">Jangan lupa like, comment dan share untuk melayakkan anda membuat tuntutan tajaan tiket percuma!!</h3>
+                        <h3 class="mb-3 text-lg font-bold text-yellow-400">Jangan lupa like, comment dan share untuk melayakkan anda membuat tuntutan tajaan tiket percuma!!</h3>
+                        <p class="text-lg font-bold text-yellow-400">#HariaPenangHaria</p>
                     </div>
                     <a
                         :href="route('submissions.create')"

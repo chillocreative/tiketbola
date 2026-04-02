@@ -120,7 +120,7 @@ class SubmissionController extends Controller
             . "Sila hadir untuk menebus dan mengambil tiket anda di:\n\n"
             . "Lokasi: Dewan Penang 2030, Paya Keladi, Kepala Batas\n"
             . "Tarikh / Masa:\n"
-            . "Jumaat, 3 April 2026 (8.30 malam - 10.30 malam)\n"
+            . "Jumaat, 3 April 2026 (8.30 malam - 10.30 malam)\n\n"
             . "Sabtu, 4 April 2026 (10.00 pagi - 12.00 tengah hari)\n\n"
             . "Google Maps: https://maps.app.goo.gl/U4c5GUAbxWbJaryb7\n\n"
             . "Sila bawa kad pengenalan untuk pengesahan. Wakil tidak dibenarkan.\n\n"

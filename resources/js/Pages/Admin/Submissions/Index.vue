@@ -1,7 +1,27 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, Link, router } from '@inertiajs/vue3';
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
+
+const tableScroller = ref(null);
+let isDown = false;
+let startX = 0;
+let scrollLeft = 0;
+
+const onMouseDown = (e) => {
+    isDown = true;
+    tableScroller.value.style.cursor = 'grabbing';
+    startX = e.pageX - tableScroller.value.offsetLeft;
+    scrollLeft = tableScroller.value.scrollLeft;
+};
+const onMouseLeave = () => { isDown = false; tableScroller.value.style.cursor = 'grab'; };
+const onMouseUp = () => { isDown = false; tableScroller.value.style.cursor = 'grab'; };
+const onMouseMove = (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - tableScroller.value.offsetLeft;
+    tableScroller.value.scrollLeft = scrollLeft - (x - startX);
+};
 
 const props = defineProps({
     submissions: Object,
@@ -108,7 +128,7 @@ const categoryClass = (c) => c === 'mbsp'
                     <p class="mt-3 text-sm text-gray-500">Tiada pendaftaran lagi.</p>
                 </div>
 
-                <div v-else class="overflow-x-auto">
+                <div v-else ref="tableScroller" class="overflow-x-auto cursor-grab select-none" @mousedown="onMouseDown" @mouseleave="onMouseLeave" @mouseup="onMouseUp" @mousemove="onMouseMove">
                     <table class="min-w-full">
                         <thead>
                             <tr class="border-b border-white/5">

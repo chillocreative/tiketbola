@@ -89,7 +89,7 @@ const copyIc = (ic, id) => {
     setTimeout(() => { copiedId.value = null; }, 1500);
 };
 
-const statusLabel = (s) => ({ verified: 'Diluluskan', rejected: 'Ditolak', pending: 'Menunggu', issued: 'Tiket Dikeluarkan' }[s] || s);
+const statusLabel = (s) => ({ verified: 'Diluluskan', rejected: 'Ditolak', pending: 'Menunggu', issued: 'Tiket Telah Diambil' }[s] || s);
 const statusClass = (s) => ({
     verified: 'bg-green-500/10 text-green-400 ring-1 ring-green-500/20',
     rejected: 'bg-red-500/10 text-red-400 ring-1 ring-red-500/20',
@@ -221,7 +221,7 @@ const categoryClass = (c) => c === 'mbsp'
                                             <button @click="issue(s.id)" :disabled="processing === s.id"
                                                 class="rounded-lg bg-blue-500 px-2.5 py-1 text-[10px] font-bold text-white transition hover:bg-blue-400 disabled:opacity-50">Serah Tiket</button>
                                         </template>
-                                        <span v-else-if="s.status === 'issued'" class="text-[10px] font-medium text-blue-400">Tiket Dikeluarkan</span>
+                                        <span v-else-if="s.status === 'issued'" class="text-[10px] font-medium text-blue-400">Tiket Telah Diambil</span>
                                         <span v-else-if="s.status === 'rejected'" class="text-[10px] font-medium text-red-400">Ditolak</span>
                                         <Link :href="route('admin.submissions.edit', s.id)"
                                             class="rounded-lg bg-white/10 px-2.5 py-1 text-[10px] font-bold text-gray-300 transition hover:bg-white/20 hover:text-white">Edit</Link>

@@ -554,7 +554,7 @@ class SubmissionController extends Controller
             $csv .= $s->phone . ',';
             $csv .= '"' . str_replace('"', '""', $s->address) . '",';
             $csv .= ($s->category === 'mbsp' ? 'MBSP' : 'AMK') . ',';
-            $csv .= (['verified' => 'Diluluskan', 'rejected' => 'Ditolak', 'issued' => 'Tiket Dikeluarkan', 'pending' => 'Menunggu'][$s->status] ?? $s->status) . ',';
+            $csv .= (['verified' => 'Diluluskan', 'rejected' => 'Ditolak', 'issued' => 'Tiket Telah Diambil', 'pending' => 'Menunggu'][$s->status] ?? $s->status) . ',';
             $csv .= $s->created_at->format('d/m/Y') . "\n";
         }
 

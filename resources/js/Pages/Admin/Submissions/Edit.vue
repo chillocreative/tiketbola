@@ -85,7 +85,7 @@ const submit = () => {
                                         <option value="pending" class="bg-[#0B1A2E]">Menunggu</option>
                                         <option value="verified" class="bg-[#0B1A2E]">Diluluskan</option>
                                         <option value="rejected" class="bg-[#0B1A2E]">Ditolak</option>
-                                        <option value="issued" class="bg-[#0B1A2E]">Tiket Dikeluarkan</option>
+                                        <option value="issued" class="bg-[#0B1A2E]">Tiket Telah Diambil</option>
                                     </select>
                                 </div>
                             </div>

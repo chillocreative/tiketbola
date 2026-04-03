@@ -45,6 +45,11 @@ class SubmissionController extends Controller
             abort(404);
         }
 
+        if (self::getBalance($category) <= 0) {
+            return redirect()->route('submissions.create')
+                ->with('warning', 'Maaf, kuota untuk kategori ini telah penuh.');
+        }
+
         return Inertia::render('Submissions/Form', [
             'category' => $category,
             'categoryLabel' => $categories[$category],
@@ -55,6 +60,12 @@ class SubmissionController extends Controller
 
     public function store(Request $request)
     {
+        $category = $request->input('category');
+        if (isset(self::QUOTAS[$category]) && self::getBalance($category) <= 0) {
+            return redirect()->route('submissions.create')
+                ->with('warning', 'Maaf, kuota untuk kategori ini telah penuh.');
+        }
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'ic_number' => 'required|string|digits_between:1,12|unique:submissions,ic_number',

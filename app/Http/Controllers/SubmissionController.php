@@ -151,13 +151,13 @@ class SubmissionController extends Controller
     public function issue(Submission $submission)
     {
         if ($submission->status !== 'verified') {
-            return back()->with('warning', 'Hanya permohonan yang diluluskan boleh diserahkan tiket.');
+            return redirect()->route('admin.submissions')->with('warning', 'Hanya permohonan yang diluluskan boleh diserahkan tiket.');
         }
 
         $submission->status = 'issued';
         $submission->save();
 
-        return back()->with('success', 'Tiket telah dikeluarkan untuk ' . $submission->name . '.');
+        return redirect()->route('admin.submissions')->with('success', 'Tiket telah dikeluarkan untuk ' . $submission->name . '.');
     }
 
     public function verify(Request $request, Submission $submission)

@@ -550,22 +550,45 @@ class SubmissionController extends Controller
     {
         $submissions = Submission::latest()->get();
 
-        $csv = "\xEF\xBB\xBF"; // UTF-8 BOM for Excel
-        $csv .= "Nama,No KP,Telefon,Alamat,Kategori,Status,Tarikh\n";
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setTitle('Pendaftaran');
 
-        foreach ($submissions as $s) {
-            $csv .= '"' . str_replace('"', '""', $s->name) . '",';
-            $csv .= $s->ic_number . ',';
-            $csv .= $s->phone . ',';
-            $csv .= '"' . str_replace('"', '""', $s->address) . '",';
-            $csv .= ($s->category === 'mbsp' ? 'MBSP' : 'AMK') . ',';
-            $csv .= (['verified' => 'Diluluskan', 'rejected' => 'Ditolak', 'issued' => 'Tiket Telah Diambil', 'pending' => 'Menunggu'][$s->status] ?? $s->status) . ',';
-            $csv .= $s->created_at->format('d/m/Y') . "\n";
+        // Header row
+        $headers = ['No', 'Nama', 'No KP', 'Telefon', 'Alamat', 'Kategori', 'Status', 'Tarikh'];
+        foreach ($headers as $col => $header) {
+            $sheet->setCellValue([$col + 1, 1], $header);
         }
 
-        return response($csv, 200, [
-            'Content-Type' => 'text/csv; charset=UTF-8',
-            'Content-Disposition' => 'attachment; filename="pendaftaran_' . date('Ymd') . '.csv"',
-        ]);
+        // Bold header
+        $sheet->getStyle('A1:H1')->getFont()->setBold(true);
+
+        // Data rows
+        $statusMap = ['verified' => 'Diluluskan', 'rejected' => 'Ditolak', 'issued' => 'Tiket Telah Diambil', 'pending' => 'Menunggu'];
+        foreach ($submissions as $i => $s) {
+            $row = $i + 2;
+            $sheet->setCellValue([1, $row], $i + 1);
+            $sheet->setCellValue([2, $row], $s->name);
+            $sheet->setCellValueExplicit([3, $row], $s->ic_number, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
+            $sheet->setCellValueExplicit([4, $row], $s->phone, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
+            $sheet->setCellValue([5, $row], $s->address);
+            $sheet->setCellValue([6, $row], $s->category === 'mbsp' ? 'MBSP' : 'AMK');
+            $sheet->setCellValue([7, $row], $statusMap[$s->status] ?? $s->status);
+            $sheet->setCellValue([8, $row], $s->created_at->format('d/m/Y'));
+        }
+
+        // Auto-size columns
+        foreach (range('A', 'H') as $col) {
+            $sheet->getColumnDimension($col)->setAutoSize(true);
+        }
+
+        $filename = 'pendaftaran_' . date('Ymd') . '.xlsx';
+        $temp = tempnam(sys_get_temp_dir(), 'xlsx');
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $writer->save($temp);
+
+        return response()->download($temp, $filename, [
+            'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        ])->deleteFileAfterSend(true);
     }
 }

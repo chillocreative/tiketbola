@@ -129,11 +129,6 @@ const showFullModal = ref(false);
                             <p class="mt-3 text-center text-[10px] leading-relaxed text-gray-400 sm:text-xs">
                                 Tajaan Angkatan Muda Keadilan Cabang Kepala Batas & JBPP Pinang Tunggal
                             </p>
-                            <div class="mt-2 text-center">
-                                <span class="inline-flex items-center gap-1 rounded-full bg-yellow-400/10 px-2.5 py-1 text-[10px] font-bold text-yellow-400 sm:text-xs">
-                                    Baki: {{ quotas.amk.balance }} / {{ quotas.amk.total }}
-                                </span>
-                            </div>
                         </div>
                     </div>
 
@@ -157,7 +152,7 @@ const showFullModal = ref(false);
                             <p class="mt-3 text-center text-[10px] leading-relaxed text-gray-400 sm:text-xs">
                                 Tajaan Ahli Majlis MBSP, Pegawai Penyelaras KADUN Pinang Tunggal, Parti KEADILAN Cabang Kepala Batas
                             </p>
-                            <div class="mt-2 text-center">
+                            <div v-if="quotas.mbsp.balance > 0" class="mt-2 text-center">
                                 <span class="inline-flex items-center gap-1 rounded-full bg-[#00B4D8]/10 px-2.5 py-1 text-[10px] font-bold text-[#00B4D8] sm:text-xs">
                                     Baki: {{ quotas.mbsp.balance }} / {{ quotas.mbsp.total }}
                                 </span>

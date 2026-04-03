@@ -72,14 +72,19 @@ const reject = (id) => {
     router.post(route('admin.submissions.reject', id), {}, { preserveScroll: true, onFinish: () => processing.value = null });
 };
 
-const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
-
-const confirmIssue = (event, id) => {
-    if (!confirm('Tandakan tiket telah dikeluarkan?')) {
-        event.preventDefault();
-        return;
-    }
+const issue = (id) => {
+    if (!confirm('Tandakan tiket telah dikeluarkan?')) return;
     processing.value = id;
+    router.post(route('admin.submissions.issue', id), {}, {
+        preserveState: false,
+        preserveScroll: false,
+        onSuccess: () => {
+            window.location.reload();
+        },
+        onFinish: () => {
+            processing.value = null;
+        },
+    });
 };
 
 const destroy = (id) => {
@@ -240,11 +245,8 @@ const categoryClass = (c) => c === 'mbsp'
                                                 class="rounded-lg bg-red-500 px-2.5 py-1 text-[10px] font-bold text-white transition hover:bg-red-400 disabled:opacity-50">Tolak</button>
                                         </template>
                                         <template v-else-if="s.status === 'verified'">
-                                            <form method="POST" :action="route('admin.submissions.issue', s.id)" @submit="confirmIssue($event, s.id)" class="inline">
-                                                <input type="hidden" name="_token" :value="csrfToken">
-                                                <button type="submit" :disabled="processing === s.id"
-                                                    class="rounded-lg bg-blue-500 px-2.5 py-1 text-[10px] font-bold text-white transition hover:bg-blue-400 disabled:opacity-50">Serah Tiket</button>
-                                            </form>
+                                            <button @click="issue(s.id)" :disabled="processing === s.id"
+                                                class="rounded-lg bg-blue-500 px-2.5 py-1 text-[10px] font-bold text-white transition hover:bg-blue-400 disabled:opacity-50">Serah Tiket</button>
                                         </template>
                                         <span v-else-if="s.status === 'issued'" class="text-[10px] font-medium text-blue-400">Tiket Telah Diambil</span>
                                         <span v-else-if="s.status === 'rejected'" class="text-[10px] font-medium text-red-400">Ditolak</span>

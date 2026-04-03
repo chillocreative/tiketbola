@@ -21,12 +21,14 @@ Route::get('/dashboard', function () {
                 'pending' => Submission::where('category', 'amk')->where('status', 'pending')->count(),
                 'verified' => Submission::where('category', 'amk')->where('status', 'verified')->count(),
                 'rejected' => Submission::where('category', 'amk')->where('status', 'rejected')->count(),
+                'issued' => Submission::where('category', 'amk')->where('status', 'issued')->count(),
             ],
             'mbsp' => [
                 'total' => Submission::where('category', 'mbsp')->count(),
                 'pending' => Submission::where('category', 'mbsp')->where('status', 'pending')->count(),
                 'verified' => Submission::where('category', 'mbsp')->where('status', 'verified')->count(),
                 'rejected' => Submission::where('category', 'mbsp')->where('status', 'rejected')->count(),
+                'issued' => Submission::where('category', 'mbsp')->where('status', 'issued')->count(),
             ],
         ],
     ]);

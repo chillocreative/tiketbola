@@ -81,14 +81,43 @@ class SubmissionController extends Controller
 
         $submission = Submission::create($validated);
 
-        // WhatsApp: Notify user submission received
+        // WhatsApp: Notify user submission received (randomized message)
         $whatsapp = new WhatsappService();
-        $message = "Assalamualaikum dan salam sejahtera {$submission->name},\n\n"
-            . "Terima kasih kerana mendaftar untuk Tiket Bola Percuma Pulau Pinang vs Sabah.\n\n"
-            . "Permohonan anda telah berjaya diterima dan sedang dalam proses semakan. "
-            . "Sila tunggu pengesahan daripada pihak kami.\n\n"
-            . "Kami akan memaklumkan status permohonan anda melalui WhatsApp.\n\n"
-            . "Terima kasih.";
+        $messages = [
+            "Assalamualaikum dan salam sejahtera {$submission->name},\n\n"
+                . "Terima kasih kerana mendaftar untuk Tiket Bola Percuma Pulau Pinang vs Sabah.\n\n"
+                . "Permohonan anda telah berjaya diterima dan sedang dalam proses semakan. "
+                . "Sila tunggu pengesahan daripada pihak kami.\n\n"
+                . "Kami akan memaklumkan status permohonan anda melalui WhatsApp.\n\n"
+                . "Terima kasih.",
+
+            "Assalamualaikum dan salam sejahtera {$submission->name},\n\n"
+                . "Terima kasih atas pendaftaran anda untuk Tiket Bola Percuma Pulau Pinang vs Sabah.\n\n"
+                . "Permohonan anda telah kami terima dengan jayanya dan kini dalam proses semakan. "
+                . "Mohon bersabar sementara kami memproses permohonan anda.\n\n"
+                . "Status permohonan anda akan dimaklumkan melalui WhatsApp.\n\n"
+                . "Terima kasih atas sokongan anda.",
+
+            "Assalamualaikum dan salam sejahtera {$submission->name},\n\n"
+                . "Kami ingin mengucapkan terima kasih kerana mendaftar untuk Tiket Bola Percuma Pulau Pinang vs Sabah.\n\n"
+                . "Permohonan anda telah diterima dan sedang disemak oleh pihak kami. "
+                . "Sila tunggu sebentar untuk pengesahan.\n\n"
+                . "Anda akan menerima makluman status melalui WhatsApp.\n\n"
+                . "Terima kasih kerana menyokong pasukan kita.",
+
+            "Assalamualaikum dan salam sejahtera {$submission->name},\n\n"
+                . "Pendaftaran anda untuk Tiket Bola Percuma Pulau Pinang vs Sabah telah berjaya diterima!\n\n"
+                . "Permohonan anda kini sedang dalam proses semakan. "
+                . "Kami akan menghubungi anda melalui WhatsApp setelah semakan selesai.\n\n"
+                . "Terima kasih kerana sudi mendaftar.",
+
+            "Assalamualaikum dan salam sejahtera {$submission->name},\n\n"
+                . "Terima kasih kerana berminat dengan Tiket Bola Percuma Pulau Pinang vs Sabah.\n\n"
+                . "Permohonan anda telah kami terima dan akan disemak secepat mungkin. "
+                . "Pengesahan akan dimaklumkan kepada anda melalui WhatsApp.\n\n"
+                . "Terima kasih dan salam hormat.",
+        ];
+        $message = $messages[array_rand($messages)];
         $whatsapp->send($submission->phone, $message, $submission->id);
 
         return redirect()->route('submissions.form', $validated['category'])

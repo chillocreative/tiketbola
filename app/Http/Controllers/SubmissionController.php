@@ -374,12 +374,71 @@ class SubmissionController extends Controller
 
         $submission->update(['status' => 'rejected']);
 
-        // WhatsApp: Notify user application rejected
+        // WhatsApp: Notify user application rejected (randomized message)
         $whatsapp = new WhatsappService();
-        $message = "Assalamualaikum dan salam sejahtera {$submission->name}.\n\n"
-            . "Terima kasih atas permohonan anda. Dukacita dimaklumkan bahawa permohonan anda untuk mendapatkan tajaan tiket percuma adalah *TIDAK BERJAYA*.\n\n"
-            . "Permohonan adalah terhad dan diproses berdasarkan kelayakan serta kekosongan yang ada.\n\n"
-            . "Terima kasih atas minat dan sokongan anda.";
+        $name = $submission->name;
+        $messages = [
+            // Variation 1
+            "Assalamualaikum dan salam sejahtera {$name}.\n\n"
+                . "Terima kasih atas permohonan anda. Dukacita dimaklumkan bahawa permohonan anda untuk mendapatkan tajaan tiket percuma adalah *TIDAK BERJAYA*.\n\n"
+                . "Permohonan adalah terhad dan diproses berdasarkan kelayakan serta kekosongan yang ada.\n\n"
+                . "Terima kasih atas minat dan sokongan anda.",
+
+            // Variation 2
+            "Assalamualaikum dan salam sejahtera {$name}.\n\n"
+                . "Kami menghargai permohonan anda. Namun, dukacita dimaklumkan bahawa permohonan tajaan tiket percuma anda adalah *TIDAK BERJAYA*.\n\n"
+                . "Jumlah permohonan yang diterima melebihi kuota yang tersedia dan pemilihan dibuat berdasarkan kelayakan.\n\n"
+                . "Terima kasih kerana sudi memohon dan menyokong.",
+
+            // Variation 3
+            "Assalamualaikum dan salam sejahtera {$name}.\n\n"
+                . "Terima kasih kerana memohon tajaan tiket percuma. Dengan penuh hormat, kami ingin memaklumkan bahawa permohonan anda *TIDAK BERJAYA*.\n\n"
+                . "Permohonan telah diproses berdasarkan kelayakan dan kekosongan yang terhad.\n\n"
+                . "Kami menghargai minat dan sokongan anda. Terima kasih.",
+
+            // Variation 4
+            "Assalamualaikum dan salam sejahtera {$name}.\n\n"
+                . "Terima kasih atas minat anda terhadap tajaan tiket percuma. Dukacita dimaklumkan bahawa permohonan anda kali ini adalah *TIDAK BERJAYA*.\n\n"
+                . "Keputusan dibuat berdasarkan kelayakan dan had kuota yang ditetapkan.\n\n"
+                . "Terima kasih atas sokongan dan minat yang ditunjukkan.",
+
+            // Variation 5
+            "Assalamualaikum dan salam sejahtera {$name}.\n\n"
+                . "Kami ingin mengucapkan terima kasih atas permohonan anda. Walau bagaimanapun, permohonan tajaan tiket percuma anda adalah *TIDAK BERJAYA*.\n\n"
+                . "Permohonan yang diterima melebihi kekosongan yang ada dan diproses mengikut kelayakan.\n\n"
+                . "Terima kasih kerana menyokong. Semoga berjaya pada masa hadapan.",
+
+            // Variation 6
+            "Assalamualaikum dan salam sejahtera {$name}.\n\n"
+                . "Terima kasih kerana berminat dengan tajaan tiket percuma. Kami kesal memaklumkan bahawa permohonan anda adalah *TIDAK BERJAYA*.\n\n"
+                . "Pemilihan dibuat berdasarkan kelayakan dan kuota yang terhad.\n\n"
+                . "Sokongan anda amat dihargai. Terima kasih.",
+
+            // Variation 7
+            "Assalamualaikum dan salam sejahtera {$name}.\n\n"
+                . "Kami menghargai permohonan yang telah dikemukakan. Namun begitu, permohonan anda untuk tajaan tiket percuma adalah *TIDAK BERJAYA*.\n\n"
+                . "Bilangan permohonan adalah melebihi kuota dan kelulusan tertakluk kepada kelayakan serta kekosongan.\n\n"
+                . "Terima kasih atas minat dan sokongan anda yang berterusan.",
+
+            // Variation 8
+            "Assalamualaikum dan salam sejahtera {$name}.\n\n"
+                . "Terima kasih atas permohonan tajaan tiket percuma anda. Dengan hormatnya, kami memaklumkan bahawa permohonan anda *TIDAK BERJAYA* pada kali ini.\n\n"
+                . "Permohonan diproses mengikut keutamaan, kelayakan dan had kekosongan yang ada.\n\n"
+                . "Kami mengucapkan terima kasih atas sokongan anda.",
+
+            // Variation 9
+            "Assalamualaikum dan salam sejahtera {$name}.\n\n"
+                . "Terima kasih kerana sudi memohon tajaan tiket percuma. Dukacita dimaklumkan bahawa permohonan anda adalah *TIDAK BERJAYA*.\n\n"
+                . "Kuota adalah terhad dan permohonan telah dinilai berdasarkan kelayakan yang ditetapkan.\n\n"
+                . "Terima kasih atas minat dan semangat sokongan anda.",
+
+            // Variation 10
+            "Assalamualaikum dan salam sejahtera {$name}.\n\n"
+                . "Permohonan anda untuk tajaan tiket percuma telah disemak. Kami kesal memaklumkan bahawa permohonan anda adalah *TIDAK BERJAYA*.\n\n"
+                . "Pemilihan dibuat berdasarkan kelayakan dan kekosongan yang terhad.\n\n"
+                . "Sokongan dan minat anda amat kami hargai. Terima kasih.",
+        ];
+        $message = $messages[array_rand($messages)];
         $result = $whatsapp->send($submission->phone, $message, $submission->id);
 
         if ($result['success']) {

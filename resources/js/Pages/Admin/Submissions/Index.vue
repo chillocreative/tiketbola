@@ -29,17 +29,27 @@ const props = defineProps({
 });
 
 const search = ref(props.filters?.search || '');
+const statusFilter = ref(props.filters?.status || '');
 let searchTimeout = null;
 
-watch(search, (value) => {
+const applyFilters = () => {
+    router.get(route('admin.submissions'), {
+        search: search.value || undefined,
+        status: statusFilter.value || undefined,
+    }, {
+        preserveState: true,
+        preserveScroll: true,
+        replace: true,
+    });
+};
+
+watch(search, () => {
     clearTimeout(searchTimeout);
-    searchTimeout = setTimeout(() => {
-        router.get(route('admin.submissions'), { search: value || undefined }, {
-            preserveState: true,
-            preserveScroll: true,
-            replace: true,
-        });
-    }, 300);
+    searchTimeout = setTimeout(applyFilters, 300);
+});
+
+watch(statusFilter, () => {
+    applyFilters();
 });
 
 const processing = ref(null);
@@ -136,15 +146,23 @@ const categoryClass = (c) => c === 'mbsp'
                 {{ $page.props.flash.warning }}
             </div>
 
-            <!-- Search Bar -->
-            <div class="mb-4">
+            <!-- Filters -->
+            <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center">
                 <div class="relative">
                     <svg class="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
                     <input v-model="search" type="text" placeholder="Cari nama..."
-                        class="block w-full rounded-xl border-0 bg-white/5 py-2.5 pl-10 pr-4 text-sm text-white placeholder-gray-500 ring-1 ring-white/10 transition focus:bg-white/10 focus:ring-2 focus:ring-yellow-400 sm:max-w-xs" />
+                        class="block w-full rounded-xl border-0 bg-white/5 py-2.5 pl-10 pr-4 text-sm text-white placeholder-gray-500 ring-1 ring-white/10 transition focus:bg-white/10 focus:ring-2 focus:ring-yellow-400 sm:w-64" />
                 </div>
+                <select v-model="statusFilter"
+                    class="block w-full rounded-xl border-0 bg-white/5 px-4 py-2.5 text-sm text-white ring-1 ring-white/10 transition focus:bg-white/10 focus:ring-2 focus:ring-yellow-400 sm:w-48">
+                    <option value="" class="bg-[#0B1A2E]">Semua Status</option>
+                    <option value="pending" class="bg-[#0B1A2E]">Menunggu</option>
+                    <option value="verified" class="bg-[#0B1A2E]">Diluluskan</option>
+                    <option value="issued" class="bg-[#0B1A2E]">Tiket Telah Diambil</option>
+                    <option value="rejected" class="bg-[#0B1A2E]">Ditolak</option>
+                </select>
             </div>
 
             <!-- Bulk Actions Bar -->

@@ -132,11 +132,15 @@ class SubmissionController extends Controller
             $query->where('name', 'like', '%' . $request->search . '%');
         }
 
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
         $submissions = $query->paginate(15)->withQueryString();
 
         return Inertia::render('Admin/Submissions/Index', [
             'submissions' => $submissions,
-            'filters' => $request->only('search'),
+            'filters' => $request->only('search', 'status'),
             'quotas' => [
                 'amk' => ['total' => self::QUOTAS['amk'], 'approved' => self::getApprovedCount('amk'), 'balance' => self::getBalance('amk')],
                 'mbsp' => ['total' => self::QUOTAS['mbsp'], 'approved' => self::getApprovedCount('mbsp'), 'balance' => self::getBalance('mbsp')],
@@ -150,7 +154,8 @@ class SubmissionController extends Controller
             return back()->with('warning', 'Hanya permohonan yang diluluskan boleh diserahkan tiket.');
         }
 
-        $submission->update(['status' => 'issued']);
+        $submission->status = 'issued';
+        $submission->save();
 
         return back()->with('success', 'Tiket telah dikeluarkan untuk ' . $submission->name . '.');
     }

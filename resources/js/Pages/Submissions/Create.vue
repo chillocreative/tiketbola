@@ -114,14 +114,56 @@ const showFullModal = ref(false);
             </div>
 
             <div class="mx-auto max-w-lg px-4 pt-8 sm:px-6 lg:max-w-xl">
-                <!-- Slot Penuh Notice -->
-                <div class="mx-auto max-w-sm overflow-hidden rounded-2xl border border-red-500/20 bg-red-500/5 p-6 text-center backdrop-blur-sm">
-                    <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-red-500/10">
-                        <svg class="h-7 w-7 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                        </svg>
+                <h3 class="mb-6 text-center text-xl font-bold text-white sm:text-2xl">Daftar Sekarang</h3>
+
+                <div class="grid grid-cols-2 gap-3 sm:gap-4">
+                    <!-- Button 1: AMK (Kuota Penuh) -->
+                    <div class="overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm">
+                        <div class="flex h-full flex-col p-4 sm:p-5">
+                            <button
+                                @click="showFullModal = true"
+                                class="w-full rounded-xl bg-white/10 px-4 py-3 text-center text-xs font-bold text-gray-500 transition hover:bg-white/15 sm:px-6 sm:py-3.5 sm:text-sm"
+                            >
+                                Kuota Penuh
+                            </button>
+                            <p class="mt-3 text-center text-[10px] leading-relaxed text-gray-400 sm:text-xs">
+                                Tajaan Angkatan Muda Keadilan Cabang Kepala Batas & JBPP Pinang Tunggal
+                            </p>
+                            <div class="mt-2 text-center">
+                                <span class="inline-flex items-center gap-1 rounded-full bg-yellow-400/10 px-2.5 py-1 text-[10px] font-bold text-yellow-400 sm:text-xs">
+                                    Baki: 0 / {{ quotas.amk.total }}
+                                </span>
+                            </div>
+                        </div>
                     </div>
-                    <h3 class="text-lg font-bold text-white">Harap Maaf, slot telah pun penuh</h3>
+
+                    <!-- Button 2: MBSP -->
+                    <div class="overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition hover:border-[#00B4D8]/30">
+                        <div class="flex h-full flex-col p-4 sm:p-5">
+                            <Link
+                                v-if="quotas.mbsp.balance > 0"
+                                :href="route('submissions.form', 'mbsp')"
+                                class="block w-full rounded-xl bg-gradient-to-r from-[#00B4D8] to-[#0096c7] px-4 py-3 text-center text-xs font-extrabold text-white shadow-lg shadow-[#00B4D8]/25 transition-all hover:from-[#48cae4] hover:to-[#00B4D8] hover:shadow-[#00B4D8]/40 sm:px-6 sm:py-3.5 sm:text-sm"
+                            >
+                                Daftar Sekarang
+                            </Link>
+                            <button
+                                v-else
+                                @click="showFullModal = true"
+                                class="w-full rounded-xl bg-white/10 px-4 py-3 text-center text-xs font-bold text-gray-500 transition hover:bg-white/15 sm:px-6 sm:py-3.5 sm:text-sm"
+                            >
+                                Kuota Penuh
+                            </button>
+                            <p class="mt-3 text-center text-[10px] leading-relaxed text-gray-400 sm:text-xs">
+                                Tajaan Ahli Majlis MBSP, Pegawai Penyelaras KADUN Pinang Tunggal, Parti KEADILAN Cabang Kepala Batas
+                            </p>
+                            <div class="mt-2 text-center">
+                                <span class="inline-flex items-center gap-1 rounded-full bg-[#00B4D8]/10 px-2.5 py-1 text-[10px] font-bold text-[#00B4D8] sm:text-xs">
+                                    Baki: {{ quotas.mbsp.balance }} / {{ quotas.mbsp.total }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Footer -->

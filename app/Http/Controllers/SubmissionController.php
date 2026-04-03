@@ -16,7 +16,7 @@ class SubmissionController extends Controller
 
     public static function getApprovedCount(string $category): int
     {
-        return Submission::where('category', $category)->where('status', 'verified')->count();
+        return Submission::where('category', $category)->whereIn('status', ['verified', 'issued'])->count();
     }
 
     public static function getBalance(string $category): int

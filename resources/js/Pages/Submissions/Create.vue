@@ -117,10 +117,18 @@ const showFullModal = ref(false);
                 <h3 class="mb-6 text-center text-xl font-bold text-white sm:text-2xl">Daftar Sekarang</h3>
 
                 <div class="grid grid-cols-2 gap-3 sm:gap-4">
-                    <!-- Button 1: AMK (Kuota Penuh) -->
-                    <div class="overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm">
+                    <!-- Button 1: AMK -->
+                    <div class="overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition hover:border-yellow-400/30">
                         <div class="flex h-full flex-col p-4 sm:p-5">
+                            <Link
+                                v-if="quotas.amk.balance > 0"
+                                :href="route('submissions.form', 'amk')"
+                                class="block w-full rounded-xl bg-gradient-to-r from-yellow-400 to-yellow-500 px-4 py-3 text-center text-xs font-extrabold text-gray-900 shadow-lg shadow-yellow-400/25 transition-all hover:from-yellow-300 hover:to-yellow-400 hover:shadow-yellow-400/40 sm:px-6 sm:py-3.5 sm:text-sm"
+                            >
+                                Daftar Sekarang
+                            </Link>
                             <button
+                                v-else
                                 @click="showFullModal = true"
                                 class="w-full rounded-xl bg-white/10 px-4 py-3 text-center text-xs font-bold text-gray-500 transition hover:bg-white/15 sm:px-6 sm:py-3.5 sm:text-sm"
                             >
@@ -131,7 +139,7 @@ const showFullModal = ref(false);
                             </p>
                             <div class="mt-2 text-center">
                                 <span class="inline-flex items-center gap-1 rounded-full bg-yellow-400/10 px-2.5 py-1 text-[10px] font-bold text-yellow-400 sm:text-xs">
-                                    Baki: 0 / {{ quotas.amk.total }}
+                                    Baki: {{ quotas.amk.balance }} / {{ quotas.amk.total }}
                                 </span>
                             </div>
                         </div>

@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m ':*)",
+      "Bash(git push:*)",
+      "Read(//c/Users/Abdul Rahim/Downloads/**)",
+      "Bash(ls -la \"D:/TEMPORARY FOLDER/poster-bola\"*)",
+      "Read(//c/Users/Abdul Rahim/**)"
+    ]
+  }
+}

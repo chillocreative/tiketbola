@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, Link, router } from '@inertiajs/vue3';
-import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue';
 
 const tableScroller = ref(null);
 let isDown = false;
@@ -25,6 +25,21 @@ const onMouseMove = (e) => {
 
 const props = defineProps({
     submissions: Object,
+    filters: Object,
+});
+
+const search = ref(props.filters?.search || '');
+let searchTimeout = null;
+
+watch(search, (value) => {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+        router.get(route('admin.submissions'), { search: value || undefined }, {
+            preserveState: true,
+            preserveScroll: true,
+            replace: true,
+        });
+    }, 300);
 });
 
 const processing = ref(null);
@@ -45,6 +60,12 @@ const reject = (id) => {
     if (!confirm('Tolak permohonan ini? Notifikasi WhatsApp akan dihantar.')) return;
     processing.value = id;
     router.post(route('admin.submissions.reject', id), {}, { preserveScroll: true, onFinish: () => processing.value = null });
+};
+
+const issue = (id) => {
+    if (!confirm('Tandakan tiket telah dikeluarkan?')) return;
+    processing.value = id;
+    router.post(route('admin.submissions.issue', id), {}, { preserveScroll: true, onFinish: () => processing.value = null });
 };
 
 const destroy = (id) => {
@@ -68,11 +89,12 @@ const copyIc = (ic, id) => {
     setTimeout(() => { copiedId.value = null; }, 1500);
 };
 
-const statusLabel = (s) => ({ verified: 'Diluluskan', rejected: 'Ditolak', pending: 'Menunggu' }[s] || s);
+const statusLabel = (s) => ({ verified: 'Diluluskan', rejected: 'Ditolak', pending: 'Menunggu', issued: 'Tiket Dikeluarkan' }[s] || s);
 const statusClass = (s) => ({
     verified: 'bg-green-500/10 text-green-400 ring-1 ring-green-500/20',
     rejected: 'bg-red-500/10 text-red-400 ring-1 ring-red-500/20',
     pending: 'bg-yellow-400/10 text-yellow-400 ring-1 ring-yellow-400/20',
+    issued: 'bg-blue-500/10 text-blue-400 ring-1 ring-blue-500/20',
 }[s] || '');
 const categoryLabel = (c) => c === 'mbsp' ? 'MBSP' : 'AMK';
 const categoryClass = (c) => c === 'mbsp'
@@ -112,6 +134,17 @@ const categoryClass = (c) => c === 'mbsp'
             </div>
             <div v-if="$page.props.flash?.warning" class="mb-4 rounded-xl border border-yellow-400/20 bg-yellow-400/10 px-4 py-3 text-sm text-yellow-400">
                 {{ $page.props.flash.warning }}
+            </div>
+
+            <!-- Search Bar -->
+            <div class="mb-4">
+                <div class="relative">
+                    <svg class="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                    <input v-model="search" type="text" placeholder="Cari nama..."
+                        class="block w-full rounded-xl border-0 bg-white/5 py-2.5 pl-10 pr-4 text-sm text-white placeholder-gray-500 ring-1 ring-white/10 transition focus:bg-white/10 focus:ring-2 focus:ring-yellow-400 sm:max-w-xs" />
+                </div>
             </div>
 
             <!-- Bulk Actions Bar -->
@@ -184,7 +217,11 @@ const categoryClass = (c) => c === 'mbsp'
                                             <button @click="reject(s.id)" :disabled="processing === s.id"
                                                 class="rounded-lg bg-red-500 px-2.5 py-1 text-[10px] font-bold text-white transition hover:bg-red-400 disabled:opacity-50">Tolak</button>
                                         </template>
-                                        <span v-else-if="s.status === 'verified'" class="text-[10px] font-medium text-green-400">Diluluskan</span>
+                                        <template v-else-if="s.status === 'verified'">
+                                            <button @click="issue(s.id)" :disabled="processing === s.id"
+                                                class="rounded-lg bg-blue-500 px-2.5 py-1 text-[10px] font-bold text-white transition hover:bg-blue-400 disabled:opacity-50">Serah Tiket</button>
+                                        </template>
+                                        <span v-else-if="s.status === 'issued'" class="text-[10px] font-medium text-blue-400">Tiket Dikeluarkan</span>
                                         <span v-else-if="s.status === 'rejected'" class="text-[10px] font-medium text-red-400">Ditolak</span>
                                         <Link :href="route('admin.submissions.edit', s.id)"
                                             class="rounded-lg bg-white/10 px-2.5 py-1 text-[10px] font-bold text-gray-300 transition hover:bg-white/20 hover:text-white">Edit</Link>

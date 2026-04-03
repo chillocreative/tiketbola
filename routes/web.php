@@ -49,6 +49,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/admin/submissions/{submission}', [SubmissionController::class, 'destroy'])->name('admin.submissions.destroy');
     Route::post('/admin/submissions/{submission}/verify', [SubmissionController::class, 'verify'])->name('admin.submissions.verify');
     Route::post('/admin/submissions/{submission}/reject', [SubmissionController::class, 'reject'])->name('admin.submissions.reject');
+    Route::post('/admin/submissions/{submission}/issue', [SubmissionController::class, 'issue'])->name('admin.submissions.issue');
 
     // Sendora settings
     Route::get('/admin/sendora', [SendoraSettingController::class, 'edit'])->name('admin.sendora.edit');

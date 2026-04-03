@@ -124,17 +124,35 @@ class SubmissionController extends Controller
             ->with('success', 'Pendaftaran berjaya dihantar!');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $submissions = Submission::latest()->paginate(15);
+        $query = Submission::latest();
+
+        if ($request->filled('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+
+        $submissions = $query->paginate(15)->withQueryString();
 
         return Inertia::render('Admin/Submissions/Index', [
             'submissions' => $submissions,
+            'filters' => $request->only('search'),
             'quotas' => [
                 'amk' => ['total' => self::QUOTAS['amk'], 'approved' => self::getApprovedCount('amk'), 'balance' => self::getBalance('amk')],
                 'mbsp' => ['total' => self::QUOTAS['mbsp'], 'approved' => self::getApprovedCount('mbsp'), 'balance' => self::getBalance('mbsp')],
             ],
         ]);
+    }
+
+    public function issue(Submission $submission)
+    {
+        if ($submission->status !== 'verified') {
+            return back()->with('warning', 'Hanya permohonan yang diluluskan boleh diserahkan tiket.');
+        }
+
+        $submission->update(['status' => 'issued']);
+
+        return back()->with('success', 'Tiket telah dikeluarkan untuk ' . $submission->name . '.');
     }
 
     public function verify(Request $request, Submission $submission)
@@ -463,7 +481,7 @@ class SubmissionController extends Controller
             'phone' => 'required|string|digits_between:1,11',
             'address' => 'required|string|max:1000',
             'category' => 'required|in:amk,mbsp',
-            'status' => 'required|in:pending,verified,rejected',
+            'status' => 'required|in:pending,verified,rejected,issued',
         ], [
             'ic_number.unique' => 'No Kad Pengenalan ini telah didaftarkan.',
         ]);
@@ -491,7 +509,7 @@ class SubmissionController extends Controller
             'phone' => 'required|string|digits_between:1,11',
             'address' => 'required|string|max:1000',
             'category' => 'required|in:amk,mbsp',
-            'status' => 'required|in:pending,verified,rejected',
+            'status' => 'required|in:pending,verified,rejected,issued',
         ], [
             'ic_number.unique' => 'No Kad Pengenalan ini telah didaftarkan.',
         ]);
@@ -536,7 +554,7 @@ class SubmissionController extends Controller
             $csv .= $s->phone . ',';
             $csv .= '"' . str_replace('"', '""', $s->address) . '",';
             $csv .= ($s->category === 'mbsp' ? 'MBSP' : 'AMK') . ',';
-            $csv .= ($s->status === 'verified' ? 'Diluluskan' : ($s->status === 'rejected' ? 'Ditolak' : 'Menunggu')) . ',';
+            $csv .= (['verified' => 'Diluluskan', 'rejected' => 'Ditolak', 'issued' => 'Tiket Dikeluarkan', 'pending' => 'Menunggu'][$s->status] ?? $s->status) . ',';
             $csv .= $s->created_at->format('d/m/Y') . "\n";
         }
 
